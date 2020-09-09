@@ -2,11 +2,13 @@
 
 #include <QScreen>
 #include <QApplication>
+#include <QDesktopWidget>
 
 SystemInfo::SystemInfo()
 {
     m_screen = QApplication::primaryScreen();    // 获取屏幕原始截图
     m_deskWid = QApplication::desktop();         // 获取桌面的窗体对象
+    m_listScreen = QGuiApplication::screens();
 }
 
 /*!
@@ -42,7 +44,7 @@ int SystemInfo::devicePixelRatio()
  */
 QRect SystemInfo::screenGeometry()
 {
-    return m_deskWid->screenGeometry();
+    return  m_deskWid->screenGeometry();
 }
 
 /*!
@@ -66,16 +68,15 @@ void SystemInfo::virtualGeometry(QRect &rect, bool &b)
 }
 
 /*!
- * \brief SystemInfo::globalScreen 获取屏幕的相关信息
- * \param[out] pix 屏幕截图原始图
- * \param[out] rect 原始截图的尺寸
+ * \brief SystemInfo::globalScreen 获取屏幕的原图和屏幕个数
  * \param[out] num 屏幕个数
+ * \return 屏幕截图原始图
  */
-void SystemInfo::globalScreen(QPixmap *pix, QRect &rect, int num)
+QPixmap* SystemInfo::globalScreen(int &num)
 {
-
-    pix = new QPixmap(m_screen->grabWindow(m_deskWid->winId(), 0, 0, m_deskWid->size().width(), m_deskWid->size().height()));  // 截取屏幕上窗体对象所在区域的图像
-    rect = pix->rect();
+    QPixmap *pix = new QPixmap(m_screen->grabWindow(m_deskWid->winId(), 0, 0, m_deskWid->size().width(), m_deskWid->size().height()));  // 截取屏幕上窗体对象所在区域的图像
     num = m_deskWid->screenCount();
+
+    return pix;
 }
 

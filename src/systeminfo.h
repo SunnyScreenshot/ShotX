@@ -1,10 +1,13 @@
 #ifndef SYSTEMINFO_H
 #define SYSTEMINFO_H
 
-#include <QDesktopWidget>
-
-class QScreen;
 class QDesktopWidget;
+class QRect;
+class QScreen;
+class QPixmap;
+class QDesktopWidget;
+
+#include <QList>
 
 class SystemInfo
 {
@@ -17,14 +20,12 @@ public:
     QRect screenGeometry();                      // 获取设备屏幕大小
     QRect availableGeometry();                   // 获取可用桌面大小
     void virtualGeometry(QRect &rect, bool &b);
-    void globalScreen(QPixmap *pix, QRect &rect, int num);
-
+    QPixmap *globalScreen(int &num);
 
 private:
     QScreen *m_screen;
     QDesktopWidget *m_deskWid;
-
-
+    QList<QScreen *> m_listScreen;
 };
 
 #endif // SYSTEMINFO_H
