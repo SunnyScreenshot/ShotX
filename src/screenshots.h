@@ -32,7 +32,6 @@ private:
     QPoint offset();
     void drawScreenRect(QRect &rect, QPainter &pa); //绘画截图黑白线框
 
-
 protected:
     void keyPressEvent(QKeyEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;

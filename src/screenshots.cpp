@@ -11,6 +11,7 @@
 #include <QPainter>
 #include <QGuiApplication>
 #include <QScreen>
+#include <QCursor>
 
 #define CURR_TIME QDateTime::currentDateTime().toString("yyyy-MM-dd hh-mm-ss-zzz")
 
@@ -42,8 +43,16 @@ void ScreenShots::init()
     m_screenType = ScreenType::Select;
 
     setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint); // 窗口置顶 + 隐藏标题栏
-//    setFixedSize(QApplication::desktop()->rect().size());   // 用 resize() 的话，发现会操蛋的蛋疼
-    setFixedSize(1600, 800);
+    setFixedSize(QGuiApplication::screenAt(QCursor::pos())->size());   // 用 resize() 的话，发现会操蛋的蛋疼
+
+////#if (QT_VERSION >= QT_VERSION_CHECK(5, 10, 0))
+//  QRect position = frameGeometry();
+//  QScreen* screen = QGuiApplication::screenAt(QCursor::pos());
+//  position.moveCenter(screen->availableGeometry().center());
+//  move(position.topLeft());
+////#endif
+
+//  qDebug()<<position<<"  "<<screen->availableGeometry();
     setWindowIcon(QIcon(":/icons/logo.svg"));
 }
 
@@ -124,12 +133,13 @@ ScreenTypes ScreenShots::isInArea(QPoint pos)
     if (m_rect.isEmpty())
         return ScreenType::Select;
 
-    bool b = false;
+    bool b = true;
     if (m_rect.contains(pos, b)) {  // 点在矩形内部（含边界）
-        if (b)
+        if (b) {
             return ScreenType::Move;
-        else
+        } else {
             return ScreenType::SetSize;
+        }
     } else {  // 点在矩形外部（不含边界）
 //        m_screenType = ScreenType::Select;
         return ScreenType::Select;
@@ -144,47 +154,54 @@ void ScreenShots::keyPressEvent(QKeyEvent *event)
 
 void ScreenShots::mousePressEvent(QMouseEvent *event)
 {
-//    m_endPos = m_staPos = event->pos();
-    ScreenTypes type = isInArea(event->pos());
+    if (m_rect.isEmpty())
+        m_screenType = ScreenType::Select;
+
+    bool b = true;
+    if (m_rect.contains(event->pos(), b)) {  // 点在矩形内部（含边界）   这个函数有问题
+        if (b) {
+            qDebug()<<"---true";
+            m_screenType = ScreenType::Move;
+        } else {
+            qDebug()<<"---false";
+            m_screenType = ScreenType::SetSize;
+        }
+    } else {  // 点在矩形外部（不含边界）
+        m_endPos = m_staPos = event->pos();
+        m_screenType = ScreenType::Select;
+    }
 
     if (m_screenType == ScreenType::Select) {
         m_endPos = m_staPos = event->pos();
-    } else if (m_screenType == ScreenType::Move){
+    } else if (m_screenType == ScreenType::Move) {
         m_moveEndPos = m_moveStaPos = event->pos();
     }
-    qDebug()<<"---[mousePress]"<<m_staPos<<m_endPos<<m_moveStaPos<<m_moveEndPos<<QString::number(m_screenType, 10)<<QString::number(type, 10);
+
+    qDebug()<<"---[mousePress]"<<m_rect.contains(event->pos(), true)<<m_staPos<<m_endPos<<m_rect<<"   "<<event->pos()<<"   "<<m_moveStaPos<<m_moveEndPos<<QString::number(m_screenType, 10);
 }
 
 void ScreenShots::mouseMoveEvent(QMouseEvent *event)
 {
-//    m_endPos = event->pos();
-    ScreenTypes type = isInArea(event->pos());
-
     if (m_screenType == ScreenType::Select) {
         m_endPos = event->pos();
     } else if (m_screenType == ScreenType::Move){
-        m_moveEndPos = event->pos();
+        m_moveEndPos = event->pos();;
     }
 
-    qDebug()<<"---[mouseMove]"<<m_staPos<<m_endPos<<m_moveStaPos<<m_moveEndPos<<QString::number(m_screenType, 10)<<QString::number(type, 10);
+    qDebug()<<"---[mouseMove]"<<m_staPos<<m_endPos<<m_rect<<"   "<<event->pos()<<"   "<<m_moveStaPos<<m_moveEndPos<<QString::number(m_screenType, 10);
 }
 
 void ScreenShots::mouseReleaseEvent(QMouseEvent *event)
 {
-//    m_endPos = event->pos();
-
-    if (m_rect.isEmpty())
-        m_screenType = ScreenType::Select;
-
     if (m_screenType == ScreenType::Select) {
         m_endPos = event->pos();
-        m_screenType = (ScreenType::Move);
     } else if (m_screenType == ScreenType::Move){
-        m_moveEndPos = event->pos();
-//            m_moveEndPos = m_moveStaPos = QPoint();
+        m_staPos = m_rect.topLeft();
+        m_endPos = m_rect.bottomRight() + QPoint(1, 1);  // 这里需要探究下（怀疑刷新和线宽 1px 会这样）
+        m_moveEndPos = m_moveStaPos = QPoint(0, 0);
     }
 
-    qDebug()<<"---[mouseRelease]"<<m_staPos<<m_endPos<<m_moveStaPos<<m_moveEndPos<<QString::number(m_screenType, 10);
+    qDebug()<<"---[mouseRelease]"<<m_staPos<<m_endPos<<m_rect<<"   "<<event->pos()<<"   "<<m_moveStaPos<<m_moveEndPos<<QString::number(m_screenType, 10);
 }
 
 void ScreenShots::paintEvent(QPaintEvent *event)
@@ -196,23 +213,26 @@ void ScreenShots::paintEvent(QPaintEvent *event)
 
     QPainter pa(this);
     pa.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);   // 抗锯齿 + 平滑边缘处理
-    pa.drawPixmap(m_pixmap->rect(), *m_basePixmap);
+    pa.drawPixmap(QApplication::desktop()->rect(), *m_basePixmap);
 
     m_rect = setCurrRect();  // 前台选中矩形
 
     QPoint pos = offset();
     if ((!pos.isNull()) && (m_screenType & ScreenType::Move)) {
         m_rect.setTopLeft(m_rect.topLeft() + pos);
-        m_staPos = m_rect.topLeft();
-        m_endPos = m_rect.bottomRight();
+        m_rect.setBottomRight(m_rect.bottomRight() + pos);
     }
 
     QRect baseRect(m_rect.topLeft() * m_sysInfo->devicePixelRatio(), m_rect.size() * m_sysInfo->devicePixelRatio());  // 后台选中矩形
 
+    qDebug()<<"---[paintEvent1]"<<m_staPos<<m_endPos<<m_rect<<"   "<<pos<<"   "<<m_moveStaPos<<m_moveEndPos<<QString::number(m_screenType, 10);
+//    qDebug()<<"---->"<< QApplication::desktop()->rect()<<m_pixmap->rect()<<m_basePixmap->rect()<<m_sysInfo->devicePixelRatio();
     if (!m_rect.isEmpty()) {
         pa.drawPixmap(m_rect, m_pixmap->copy(baseRect));
         drawScreenRect(m_rect, pa);
     }
+
+    qDebug()<<"---[paintEvent2]"<<m_staPos<<m_endPos<<m_rect<<"   "<<pos<<"   "<<m_moveStaPos<<m_moveEndPos<<QString::number(m_screenType, 10);
 
     update();
 }

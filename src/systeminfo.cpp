@@ -76,7 +76,6 @@ QPixmap* SystemInfo::globalScreen(int &num)
 {
     QPixmap *pix = new QPixmap(m_screen->grabWindow(m_deskWid->winId(), 0, 0, m_deskWid->size().width(), m_deskWid->size().height()));  // 截取屏幕上窗体对象所在区域的图像
     num = m_deskWid->screenCount();
-
     return pix;
 }
 
