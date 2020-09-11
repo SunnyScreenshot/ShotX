@@ -43,7 +43,8 @@ void ScreenShots::init()
     m_screenType = ScreenType::Select;
 
     setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint); // 窗口置顶 + 隐藏标题栏
-    setFixedSize(QGuiApplication::screenAt(QCursor::pos())->size());   // 用 resize() 的话，发现会操蛋的蛋疼
+    setFixedSize(QApplication::desktop()->rect().size());
+//    setFixedSize(QGuiApplication::screenAt(QCursor::pos())->size());   // 用 resize() 的话，发现会操蛋的蛋疼
 
 ////#if (QT_VERSION >= QT_VERSION_CHECK(5, 10, 0))
 //  QRect position = frameGeometry();
@@ -97,8 +98,9 @@ QPoint ScreenShots::offset()
 void ScreenShots::drawScreenRect(QRect &rect, QPainter &pa)
 {
     pa.save();
+    pa.setRenderHint(QPainter::Antialiasing, false);  // 若是开启防走样，反而得不到预期效果
     pa.setBrush(Qt::NoBrush);
-    QPen penWhite(QColor(0, 0, 0, 1 * 255), 1);
+    QPen penWhite(QColor(255, 255, 255, 1 * 255), 1);
     penWhite.setStyle(Qt::CustomDashLine);
     penWhite.setDashOffset(0);
     penWhite.setDashPattern(QVector<qreal>()<< 4 << 4);
@@ -110,7 +112,7 @@ void ScreenShots::drawScreenRect(QRect &rect, QPainter &pa)
     pa.drawLine(QPoint(rect.right(), rect.top()), QPoint(rect.right(), rect.bottom()));
 
     QPen penBlack(penWhite);
-    penBlack.setColor(QColor(255, 255, 255, 1 * 255));
+    penBlack.setColor(QColor(0, 0, 0, 1 * 255));
     penBlack.setDashOffset(4);
     pa.setPen(penBlack);
     pa.drawLine(QPoint(rect.left(), rect.top()), QPoint(rect.right(), rect.top()));
