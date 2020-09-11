@@ -7,12 +7,20 @@
 
 
 enum ScreenType {
-    Select = 0x0001,                              // 选择截图矩形
+    Select = 0x0001,                             // 选择截图矩形
     Move = 0x0002,                               // 移动矩形区域
     SetSize = 0x0004                             // 设置矩形大小
 };
 Q_DECLARE_FLAGS(ScreenTypes, ScreenType)         // 枚举 ScreenType 生成宏 ScreenTypes
 Q_DECLARE_OPERATORS_FOR_FLAGS(ScreenTypes)       // 重载宏 ScreenTypes 的 |() 函数
+
+
+enum PosType {
+    Contains,                                   // 点在矩形内部
+    Cross,                                      // 点在矩形线上
+    External,                                   // 点在矩形外部
+    Other                                       // 未知
+};
 
 class ScreenShots : public QWidget
 {
@@ -23,7 +31,9 @@ public:
 
     void init();
     QRect setCurrRect();                         // 判断当前矩形的大小
-    ScreenTypes isInArea(QPoint pos);
+    PosType isInArea(QPoint pos);
+
+    void updateCursor(QEvent *event);
 
 
 private:
