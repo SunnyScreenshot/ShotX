@@ -99,6 +99,43 @@ QPoint ScreenShots::offset()
     return (m_moveEndPos - m_moveStaPos);
 }
 
+/*!
+ * \brief ScreenShots::updateCursor 依据光标和矩形所处的位置，刷新鼠标形状
+ * \note \row 鼠标移动到截图矩形边框辅警，若是坐标与矩形框线相交，则图标会默认变为缩放图标，
+ *            将此为这个“矩形线框的宽度” 简称为“灵敏度”；width 值越大，鼠标与线框边缘相交越容易，故称作灵敏度越高
+ * \param pos 当前点
+ * \param width 灵敏度调节
+ */
+void ScreenShots::updateCursor(QPoint pos, int width)
+{
+    if (m_rect.isEmpty() || width < 1)
+        return;
+
+    int x1 = m_rect.x();
+    int y1 = m_rect.y();
+    int x2 = m_rect.x() + m_rect.width();
+    int y2 = m_rect.y() + m_rect.height();
+    int w = 2 * width;
+
+    QRect rTopLeft(x1 - width, y1 - width, w, w);
+    QRect rTopRight(x2 - width, y1 - width, w, w);
+    QRect rBottomLeft(x1 - width, y2 - width, w, w);
+    QRect rBottomRight(x2 - width, y2 - width, w, w);
+    QRect rTop(x1 + width, y1 - width, m_rect.width() - w, w);
+    QRect rBottom(x1 + width, y2 - width, m_rect.width() - w, w);
+    QRect rLeft(x1 - width, y1 + width, w, m_rect.height() - w);
+    QRect rRight(x2 - width, y1 + width, w, m_rect.height() - w);
+
+    if (rTopLeft.contains(pos) || rBottomRight.contains(pos))
+        setCursor(Qt::SizeFDiagCursor);
+    if (rBottomLeft.contains(pos) || rTopRight.contains(pos))
+        setCursor(Qt::SizeBDiagCursor);
+    if (rTop.contains(pos) || rBottom.contains(pos))
+        setCursor(Qt::SizeVerCursor);
+    if (rLeft.contains(pos) || rRight.contains(pos))
+        setCursor(Qt::SizeHorCursor);
+}
+
 void ScreenShots::drawScreenRect(QRect &rect, QPainter &pa)
 {
     pa.save();
@@ -130,28 +167,30 @@ void ScreenShots::drawScreenRect(QRect &rect, QPainter &pa)
  * \brief ScreenShots::isInArea 检测当前鼠标所处矩形的位置
  * \param[in] pos 检测某点是否在矩形中的点
  */
-PosType ScreenShots::isInArea(QPoint pos)
+PosType ScreenShots::isInArea(QPoint pos, int width)
 {
     if (m_rect.isEmpty())
         return PosType::Other;
 
-    if (m_rect.contains(pos, false)) {
-        if (m_rect.contains(pos, true)) {  // 点在矩形内部（不含边界）
+    int w = 2 * width;
+    QRect outboard(m_rect.x() - width, m_rect.y() - width, m_rect.width() + w, m_rect.height() + w);  // 外侧矩形
+    QRect inside(m_rect.x() + width, m_rect.y() + width, m_rect.width() - w, m_rect.height() - w);   // 内侧矩形
+
+    if (outboard.contains(pos, false)) {
+        if (inside.contains(pos, true)) {  // 点在矩形内部（不含边界）
             qDebug()<<"--c--"<<pos<<"点在矩形内部";
+            setCursor(Qt::SizeAllCursor);
             return PosType::Contains;
         } else {                           // 点在矩形边界上
             qDebug()<<"--c--"<<pos<<"点在矩形边界上";
+            updateCursor(pos, width);
             return PosType::Cross;
         }
     } else {                                // 点在矩形外部（不含边界）
         qDebug()<<"--c--"<<pos<<"点在矩形外部（不含边界）";
+        setCursor(Qt::ArrowCursor);
         return PosType::External;
     }
-}
-
-void ScreenShots::updateCursor(QEvent *event)
-{
-
 }
 
 /*!
@@ -271,7 +310,30 @@ void ScreenShots::paintEvent(QPaintEvent *event)
         drawScreenRect(m_rect, pa);
     }
 
-//    qDebug()<<"---[paintEvent2]"<<m_staPos<<m_endPos<<m_rect<<"   "<<pos<<"   "<<m_moveStaPos<<m_moveEndPos<<QString::number(m_screenType, 10);
+//    int x1 = m_rect.x();
+//    int y1 = m_rect.y();
+//    int x2 = m_rect.x() + m_rect.width();
+//    int y2 = m_rect.y() + m_rect.height();
+//    int width = 8;
+//    int w = 2 * width;
+//    QRect rTopLeft(x1 - width, y1 - width, w, w);
+//    QRect rTopRight(x2 - width, y1 - width, w, w);
+//    QRect rBottomLeft(x1 - width, y2 - width, w, w);
+//    QRect rBottomRight(x2 - width, y2 - width, w, w);
+//    QRect rTop(x1 + width, y1 - width, m_rect.width() - w, w);
+//    QRect rBottom(x1 + width, y2 - width, m_rect.width() - w, w);
+//    QRect rLeft(x1 - width, y1 + width, w, m_rect.height() - w);
+//    QRect rRight(x2 - width, y1 + width, w, m_rect.height() - w);
 
+//    pa.fillRect(rTopLeft, Qt::red);
+//    pa.fillRect(rTopRight, Qt::red);
+//    pa.fillRect(rBottomLeft, Qt::yellow);
+//    pa.fillRect(rBottomRight, Qt::yellow);
+//    pa.fillRect(rTop, Qt::green);
+//    pa.fillRect(rBottom, Qt::green);
+//    pa.fillRect(rLeft, Qt::blue);
+//    pa.fillRect(rRight, Qt::blue);
+
+//    qDebug()<<"---[paintEvent2]"<<m_staPos<<m_endPos<<m_rect<<"   "<<pos<<"   "<<m_moveStaPos<<m_moveEndPos<<QString::number(m_screenType, 10);
     update();
 }
