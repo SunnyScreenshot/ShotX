@@ -34,6 +34,7 @@ public:
     PosType isInArea(QPoint pos);
 
     void updateCursor(QEvent *event);
+    bool DectionAndSetMouseTracking(bool b = false);
 
 
 private:
@@ -50,11 +51,14 @@ protected:
     void paintEvent(QPaintEvent *event) override;
 
 private:
+    bool   m_mouseTracking;     // 鼠标跟踪是否开启标志
     QRect  m_rect;
     QPoint m_staPos;
     QPoint m_endPos;
     QPoint m_moveStaPos;
     QPoint m_moveEndPos;
+    QPoint m_trackingStaPos;
+    QPoint m_trackingEndPos;
     ScreenTypes m_screenType;
 
     QPixmap    *m_pixmap;         // 原图

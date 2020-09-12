@@ -35,17 +35,19 @@ ScreenShots::~ScreenShots()
 
 void ScreenShots::init()
 {
+    m_mouseTracking = false;
     QPoint posNull;
     m_rect = QRect();
     m_staPos = m_endPos = posNull;
     m_moveStaPos = m_moveEndPos = posNull;
+    m_trackingStaPos = m_trackingEndPos = posNull;
     m_pixmap = m_basePixmap = m_savePixmap = nullptr;
     m_sysInfo = nullptr;
     m_screenType = ScreenType::Select;
 
     setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint); // 窗口置顶 + 隐藏标题栏
-    setFixedSize(QApplication::desktop()->rect().size());
-    setFixedSize(QSize(1600, 800));
+//    setFixedSize(QApplication::desktop()->rect().size());
+    setFixedSize(QSize(2600, 1800));
 //    setFixedSize(QGuiApplication::screenAt(QCursor::pos())->size());   // 用 resize() 的话，发现会操蛋的蛋疼
 
 ////#if (QT_VERSION >= QT_VERSION_CHECK(5, 10, 0))
@@ -152,6 +154,18 @@ void ScreenShots::updateCursor(QEvent *event)
 
 }
 
+/*!
+ * \brief ScreenShots::DectionAndSetMouseTracking 检测和设置鼠标跟踪事件
+ * \param b true 开启鼠标跟踪，false 关闭，且默认是关闭
+ * \return 此时鼠标跟踪的状态： true 为开启，false 为关闭
+ */
+bool ScreenShots::DectionAndSetMouseTracking(bool b)
+{
+    m_mouseTracking = b;
+    setMouseTracking(m_mouseTracking);
+    return m_mouseTracking;
+}
+
 void ScreenShots::keyPressEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_Escape)
@@ -160,23 +174,33 @@ void ScreenShots::keyPressEvent(QKeyEvent *event)
 
 void ScreenShots::mousePressEvent(QMouseEvent *event)
 {
-//    setMouseTracking(false);
+    DectionAndSetMouseTracking(false);
 
     if (m_rect.isEmpty())
         m_screenType = ScreenType::Select;
 
-    bool b = true;
-    if (m_rect.contains(event->pos(), b)) {  // 点在矩形内部（含边界）   这个函数有问题
-        if (b) {
-            qDebug()<<"---true";
-            m_screenType = ScreenType::Move;
-        } else {
-            qDebug()<<"---false";
-            m_screenType = ScreenType::SetSize;
-        }
-    } else {  // 点在矩形外部（不含边界）
+    PosType posType = isInArea(event->pos());
+    switch (posType) {
+    case PosType::Contains: {       // 点在矩形内部 (不含边界)
+        m_screenType = ScreenType::Move;
+        break;
+    }
+    case PosType::Cross: {         // 点在矩形边框上
+        m_screenType = ScreenType::SetSize;
+        break;
+    }
+    case PosType::External: {       // 点在矩形边框外部
         m_endPos = m_staPos = event->pos();
         m_screenType = ScreenType::Select;
+        break;
+    }
+    case PosType::Other: {           // 矩形不存在, 暂时返回未知
+        break;
+    }
+    default: {
+        qDebug()<<"---应该不会被触发的情况";
+        break;
+    }
     }
 
     if (m_screenType == ScreenType::Select) {
@@ -191,17 +215,18 @@ void ScreenShots::mousePressEvent(QMouseEvent *event)
 void ScreenShots::mouseMoveEvent(QMouseEvent *event)
 {
     isInArea(event->pos());
+    if (m_mouseTracking) {
+        qDebug()<<"---[mouseMove] 鼠标跟踪开启"<<m_staPos<<m_endPos<<m_rect<<"   "<<event->pos()<<"   "<<m_moveStaPos<<m_moveEndPos<<QString::number(m_screenType, 10);
+    } else {
+        if (m_screenType == ScreenType::Select) {
+            m_endPos = event->pos();
+        } else if (m_screenType == ScreenType::Move){
+            m_moveEndPos = event->pos();;
+        }
+        qDebug()<<"---[mouseMove] 鼠标跟踪关闭"<<m_staPos<<m_endPos<<m_rect<<"   "<<event->pos()<<"   "<<m_moveStaPos<<m_moveEndPos<<QString::number(m_screenType, 10);
 
-//    if (event->button() != Qt::LeftButton)
-//        return;
-
-    if (m_screenType == ScreenType::Select) {
-        m_endPos = event->pos();
-    } else if (m_screenType == ScreenType::Move){
-        m_moveEndPos = event->pos();;
     }
 
-    qDebug()<<"---[mouseMove]"<<m_staPos<<m_endPos<<m_rect<<"   "<<event->pos()<<"   "<<m_moveStaPos<<m_moveEndPos<<QString::number(m_screenType, 10);
 }
 
 void ScreenShots::mouseReleaseEvent(QMouseEvent *event)
@@ -214,7 +239,7 @@ void ScreenShots::mouseReleaseEvent(QMouseEvent *event)
         m_moveEndPos = m_moveStaPos = QPoint(0, 0);
     }
 
-//    setMouseTracking(true);
+    DectionAndSetMouseTracking(true);
     qDebug()<<"---[mouseRelease]"<<m_staPos<<m_endPos<<m_rect<<"   "<<event->pos()<<"   "<<m_moveStaPos<<m_moveEndPos<<QString::number(m_screenType, 10);
 }
 
