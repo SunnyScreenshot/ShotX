@@ -2,6 +2,7 @@
 #include "screenshots.h"
 
 #include <QApplication>
+#include <QDebug>
 #include <QGuiApplication>
 
 int main(int argc, char *argv[])
@@ -14,5 +15,14 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     ScreenShots shot;
     shot.show();
+
+//    QRect rect(5, 5, 10 , 5);
+//    qDebug()<<"---1--"<<rect;
+//    rect.setBottomRight(rect.bottomRight() + QPoint(1, 1) + QPoint(4, 3));
+//    qDebug()<<"---2--"<<rect;
+//    rect.setWidth(10);
+//    rect.setHeight(5);
+//    qDebug()<<"---3---"<<rect;
+
     return a.exec();
 }

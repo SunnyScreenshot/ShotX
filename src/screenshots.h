@@ -22,6 +22,18 @@ enum PosType {
     Other                                               // 未知
 };
 
+enum PosArrow {                                         // 鼠标在线框时候的方向枚举
+    Top,
+    Bottom,
+    Left,
+    Right,
+    TopLeft,
+    TopRight,
+    BottomLeft,
+    BottomRight,
+    UnKnown
+};
+
 class ScreenShots : public QWidget
 {
     Q_OBJECT
@@ -40,6 +52,8 @@ private:
     const QPixmap *pixmap();
     const QPixmap *basePixmap();                        // 背景图
     void drawScreenRect(QRect &rect, QPainter &pa);     // 绘画截图黑白线框
+    void drawAnchor(QPainter &pa, bool b = true, int r = 4); // 绘画线框的八个锚点
+    PosArrow posArrow(QPoint pos, int width = 3);
 
 protected:
     void keyPressEvent(QKeyEvent *event) override;
@@ -51,10 +65,13 @@ protected:
 private:
     bool   m_mouseTracking;                             // 鼠标跟踪是否开启标志
     QRect  m_rect;
+    QRect  m_tempRect;
     QPoint m_staPos;
     QPoint m_endPos;
     QPoint m_moveStaPos;
     QPoint m_moveEndPos;
+    QPoint m_sizeStaPos;
+    QPoint m_sizeEndPos;
     QPoint m_trackingStaPos;
     QPoint m_trackingEndPos;
     ScreenTypes m_screenType;
