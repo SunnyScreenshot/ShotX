@@ -20,13 +20,15 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     screenshots.cpp \
-    systeminfo.cpp
+    systeminfo.cpp \
+    trayiconwindow.cpp
 
 HEADERS += \
     GuiHelper/guiapplicationhelper.h \
     mainwindow.h \
     screenshots.h \
-    systeminfo.h
+    systeminfo.h \
+    trayiconwindow.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

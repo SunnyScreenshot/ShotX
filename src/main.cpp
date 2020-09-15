@@ -1,9 +1,11 @@
 #include "mainwindow.h"
 #include "screenshots.h"
+#include "trayiconwindow.h"
 
 #include <QApplication>
 #include <QDebug>
 #include <QGuiApplication>
+
 
 int main(int argc, char *argv[])
 {
@@ -13,8 +15,12 @@ int main(int argc, char *argv[])
 #endif
 
     QApplication a(argc, argv);
-    ScreenShots shot;
-    shot.show();
+
+    TrayIconWindow *trayIcon = new TrayIconWindow();
+//    trayIcon->show();
+
+//    ScreenShots shot;
+//    shot.show();
 
 //    QRect rect(5, 5, 10 , 5);
 //    qDebug()<<"---1--"<<rect;

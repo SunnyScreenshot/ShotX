@@ -15,7 +15,6 @@ enum ScreenType {
 Q_DECLARE_FLAGS(ScreenTypes, ScreenType)                // 枚举 ScreenType 生成宏 ScreenTypes
 Q_DECLARE_OPERATORS_FOR_FLAGS(ScreenTypes)              // 重载宏 ScreenTypes 的 |() 函数
 
-
 enum PosType {
     Contains,                                           // 点在矩形内部
     Cross,                                              // 点在矩形线上
