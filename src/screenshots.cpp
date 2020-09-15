@@ -245,7 +245,7 @@ PosType ScreenShots::isInArea(QPoint pos, int width)
     QRect outboard(m_rect.x() - width, m_rect.y() - width, m_rect.width() + w, m_rect.height() + w);  // 外侧矩形
     QRect inside(m_rect.x() + width, m_rect.y() + width, m_rect.width() - w, m_rect.height() - w);    // 内侧矩形
 
-    if (outboard.contains(pos, false)) {
+    if (outboard.contains(pos, true)) {
         if (inside.contains(pos, true)) {  // 点在矩形内部（不含边界）
 //            qDebug()<<"--c--"<<pos<<"点在矩形内部";
             setCursor(Qt::SizeAllCursor);
@@ -424,6 +424,30 @@ void ScreenShots::paintEvent(QPaintEvent *event)
 
         drawAnchor(pa);
     }
+
+//    int x1 = m_rect.x();
+//    int y1 = m_rect.y();
+//    int x2 = m_rect.x() + m_rect.width();
+//    int y2 = m_rect.y() + m_rect.height();
+//    int width = g_width;
+//    int w = 2 * width;
+//    QRect rTopLeft(x1 - width, y1 - width, w, w);
+//    QRect rTopRight(x2 - width, y1 - width, w, w);
+//    QRect rBottomLeft(x1 - width, y2 - width, w, w);
+//    QRect rBottomRight(x2 - width, y2 - width, w, w);
+//    QRect rTop(x1 + width, y1 - width, m_rect.width() - w, w);
+//    QRect rBottom(x1 + width, y2 - width, m_rect.width() - w, w);
+//    QRect rLeft(x1 - width, y1 + width, w, m_rect.height() - w);
+//    QRect rRight(x2 - width, y1 + width, w, m_rect.height() - w);
+
+//    pa.fillRect(rTopLeft, Qt::red);
+//    pa.fillRect(rTopRight, Qt::red);
+//    pa.fillRect(rBottomLeft, Qt::yellow);
+//    pa.fillRect(rBottomRight, Qt::yellow);
+//    pa.fillRect(rTop, Qt::green);
+//    pa.fillRect(rBottom, Qt::green);
+//    pa.fillRect(rLeft, Qt::blue);
+//    pa.fillRect(rRight, Qt::blue);
 
     update();
 }

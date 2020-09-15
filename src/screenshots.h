@@ -5,6 +5,7 @@
 #include <QPoint>
 #include <QWidget>
 
+static const int g_width = 4;                           // 灵敏度调节 [且便于测试]
 
 enum ScreenType {
     Select = 0x0001,                                    // 选择截图矩形
@@ -43,7 +44,7 @@ public:
 
     void init();
     QRect setCurrRect();                                // 判断当前矩形的大小
-    PosType isInArea(QPoint pos, int width = 3);
+    PosType isInArea(QPoint pos, int width = g_width);
     bool DectionAndSetMouseTracking(bool b = false);    // 检测并且开启鼠标跟踪
 
 private:
@@ -52,8 +53,8 @@ private:
     const QPixmap *pixmap();
     const QPixmap *basePixmap();                        // 背景图
     void drawScreenRect(QRect &rect, QPainter &pa);     // 绘画截图黑白线框
-    void drawAnchor(QPainter &pa, bool b = true, int r = 4); // 绘画线框的八个锚点
-    PosArrow posArrow(QPoint pos, int width = 3);
+    void drawAnchor(QPainter &pa, bool b = true, int r = g_width); // 绘画线框的八个锚点
+    PosArrow posArrow(QPoint pos, int width = g_width);
 
 protected:
     void keyPressEvent(QKeyEvent *event) override;
