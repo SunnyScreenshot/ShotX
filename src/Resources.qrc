@@ -1,5 +1,19 @@
 <RCC>
     <qresource prefix="/">
         <file>icons/logo.svg</file>
+        <file>icons/normal/arrow-normal.svg</file>
+        <file>icons/normal/ellipse-normal.svg</file>
+        <file>icons/normal/line-normal.svg</file>
+        <file>icons/normal/ok-normal.svg</file>
+        <file>icons/normal/pen-normal.svg</file>
+        <file>icons/normal/quit-normal.svg</file>
+        <file>icons/normal/rectangle-normal.svg</file>
+        <file>icons/normal/save-normal.svg</file>
+        <file>icons/normal/shangchuan.svg</file>
+        <file>icons/normal/text-normal.svg</file>
+        <file>icons/normal/update-normal.svg</file>
+        <file>icons/normal/revoke-normal.svg</file>
+        <file>icons/normal/recover-normal.svg</file>
+        <file>icons/normal/blurry-normal.svg</file>
     </qresource>
 </RCC>

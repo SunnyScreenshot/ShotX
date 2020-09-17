@@ -21,6 +21,7 @@ SOURCES += \
     mainwindow.cpp \
     screenshots.cpp \
     systeminfo.cpp \
+    toolboxwindow.cpp \
     trayiconwindow.cpp
 
 HEADERS += \
@@ -28,6 +29,7 @@ HEADERS += \
     mainwindow.h \
     screenshots.h \
     systeminfo.h \
+    toolboxwindow.h \
     trayiconwindow.h
 
 # Default rules for deployment.

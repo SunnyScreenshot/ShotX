@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 42 (36781) - http://www.bohemiancoding.com/sketch -->
+    <title>trayicon2</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="trayicon2" fill="#FFFFFF">
+            <path d="M13.3333333,5 L16,2 L16,14 L13.3333333,11 L13.3333333,12.9975267 C13.3333333,13.5511774 12.8897095,14 12.3311663,14 L1.00216707,14 C0.448685479,14 0,13.544239 0,12.9975267 L0,3.00247329 C0,2.44882258 0.443623861,2 1.00216707,2 L12.3311663,2 C12.8846479,2 13.3333333,2.45576096 13.3333333,3.00247329 L13.3333333,5 Z M6.82961742,10.75 C8.48647167,10.75 9.82961742,9.40685425 9.82961742,7.75 C9.82961742,6.09314575 8.48647167,4.75 6.82961742,4.75 C5.17276317,4.75 3.82961742,6.09314575 3.82961742,7.75 C3.82961742,9.40685425 5.17276317,10.75 6.82961742,10.75 Z" id="Combined-Shape"></path>
+        </g>
+    </g>
+</svg>

@@ -4,7 +4,9 @@
 
 #include <QApplication>
 #include <QDebug>
+#include <QFrame>
 #include <QGuiApplication>
+#include "toolboxwindow.h"
 
 
 int main(int argc, char *argv[])
@@ -16,7 +18,7 @@ int main(int argc, char *argv[])
 
     QApplication a(argc, argv);
 
-    TrayIconWindow *trayIcon = new TrayIconWindow();
+//    TrayIconWindow *trayIcon = new TrayIconWindow();
 //    trayIcon->show();
 
 //    ScreenShots shot;
@@ -29,6 +31,10 @@ int main(int argc, char *argv[])
 //    rect.setWidth(10);
 //    rect.setHeight(5);
 //    qDebug()<<"---3---"<<rect;
+
+
+    ToolBoxWindow toolBox;
+    toolBox.show();
 
     return a.exec();
 }
