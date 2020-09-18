@@ -13,16 +13,12 @@ public:
     ToolBoxWindow();
     void init();
 
-
-
-    // QWidget interface
 protected:
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
 
 private:
-
     QPoint       m_topLeftPos;
     QPoint       m_staPos;
     QPoint       m_endPos;
@@ -32,12 +28,12 @@ private:
     QToolButton *toolBtnArrow;       // 箭头
     QToolButton *toolBtnPen;         // 笔
     QToolButton *toolBtnText;        // 文字
-    QToolButton *toolBtnBlurry;      // 马赛克
+    QToolButton *toolBtnMosaic;      // 马赛克
     QToolButton *toolBtnRevoke;      // 撤销
     QToolButton *toolBtnUpload;      // 上传图床
-    QToolButton *toolBtnSave;        // 保存本地
-    QToolButton *toolBtnQuit;        // 推出截图
-    QToolButton *toolBtnOk;          // 完成，图片暂存在剪切板
+    QToolButton *toolBtnDownload;    // 保存本地
+    QToolButton *toolBtnExit;        // 推出截图
+    QToolButton *toolBtnCopy;        // 完成，图片暂存在剪切板
 
 };
 

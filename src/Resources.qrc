@@ -1,19 +1,41 @@
 <RCC>
     <qresource prefix="/">
         <file>icons/logo.svg</file>
-        <file>icons/normal/arrow-normal.svg</file>
-        <file>icons/normal/ellipse-normal.svg</file>
-        <file>icons/normal/line-normal.svg</file>
-        <file>icons/normal/ok-normal.svg</file>
-        <file>icons/normal/pen-normal.svg</file>
-        <file>icons/normal/quit-normal.svg</file>
-        <file>icons/normal/rectangle-normal.svg</file>
-        <file>icons/normal/save-normal.svg</file>
-        <file>icons/normal/shangchuan.svg</file>
-        <file>icons/normal/text-normal.svg</file>
-        <file>icons/normal/update-normal.svg</file>
-        <file>icons/normal/revoke-normal.svg</file>
-        <file>icons/normal/recover-normal.svg</file>
-        <file>icons/normal/blurry-normal.svg</file>
+        <file>icons/normal/arrow.svg</file>
+        <file>icons/normal/copy.svg</file>
+        <file>icons/normal/download.svg</file>
+        <file>icons/normal/ellipse.svg</file>
+        <file>icons/normal/exit.svg</file>
+        <file>icons/normal/fill-ellipse.svg</file>
+        <file>icons/normal/fill-rect.svg</file>
+        <file>icons/normal/gif.svg</file>
+        <file>icons/normal/line.svg</file>
+        <file>icons/normal/mosaic.svg</file>
+        <file>icons/normal/pen.svg</file>
+        <file>icons/normal/recover.svg</file>
+        <file>icons/normal/rectangle.svg</file>
+        <file>icons/normal/revoke.svg</file>
+        <file>icons/normal/right.svg</file>
+        <file>icons/normal/screenshot.svg</file>
+        <file>icons/normal/text.svg</file>
+        <file>icons/normal/update.svg</file>
+        <file>icons/pressed/arrow.svg</file>
+        <file>icons/pressed/copy.svg</file>
+        <file>icons/pressed/download.svg</file>
+        <file>icons/pressed/ellipse.svg</file>
+        <file>icons/pressed/exit.svg</file>
+        <file>icons/pressed/fill-ellipse.svg</file>
+        <file>icons/pressed/fill-rect.svg</file>
+        <file>icons/pressed/gif.svg</file>
+        <file>icons/pressed/line.svg</file>
+        <file>icons/pressed/mosaic.svg</file>
+        <file>icons/pressed/pen.svg</file>
+        <file>icons/pressed/recover.svg</file>
+        <file>icons/pressed/rectangle.svg</file>
+        <file>icons/pressed/revoke.svg</file>
+        <file>icons/pressed/right.svg</file>
+        <file>icons/pressed/screenshot.svg</file>
+        <file>icons/pressed/text.svg</file>
+        <file>icons/pressed/update.svg</file>
     </qresource>
 </RCC>

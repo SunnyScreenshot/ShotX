@@ -19,7 +19,7 @@ ToolBoxWindow::ToolBoxWindow()
 void ToolBoxWindow::init()
 {
     setWindowFlags(Qt::FramelessWindowHint);
-    setAttribute(Qt::WA_TranslucentBackground);
+//    setAttribute(Qt::WA_TranslucentBackground);
 
     setContentsMargins(0, 0, 0, 0);
     QHBoxLayout *hBoxLayout = new QHBoxLayout(this);
@@ -32,12 +32,12 @@ void ToolBoxWindow::init()
                                   , toolBtnArrow
                                   , toolBtnPen
                                   , toolBtnText
-                                  , toolBtnBlurry
+                                  , toolBtnMosaic
                                   , toolBtnRevoke
                                   , toolBtnUpload
-                                  , toolBtnSave
-                                  , toolBtnQuit
-                                  , toolBtnOk};
+                                  , toolBtnDownload
+                                  , toolBtnExit
+                                  , toolBtnCopy };
 
     QStringList listName = {"rectangle"
                            , "ellipse"
@@ -45,35 +45,36 @@ void ToolBoxWindow::init()
                            , "arrow"
                            , "pen"
                            , "text"
-                           , "blurry"
+                           , "mosaic"
                            , "revoke"
                            , "update"
-                           , "save"
-                           , "quit"
-                           , "ok" };
+                           , "download"
+                           , "exit"
+                           , "copy" };
 
-    QStringList listToolTip = {tr("矩形")
-                           , tr("椭圆")
-                           , tr("直线")
-                           , tr("箭头")
-                           , tr("笔")
-                           , tr("文字")
-                           , tr("模糊")
-                           , tr("回退")
-                           , tr("上传")
-                           , tr("保存")
-                           , tr("退出")
-                           , tr("复制到剪切板") };
+    QStringList listToolTip = {tr("矩形（⌘ + 1）")
+                           , tr("椭圆（⌘ + 2）")
+                           , tr("直线（⌘ + 3）")
+                           , tr("箭头（⌘ + 4）")
+                           , tr("笔（⌘ + 5）")
+                           , tr("文字（⌘ + 6）")
+                           , tr("模糊（⌘ + 7）")
+                           , tr("撤销（⌘ + z）")
+                           , tr("上传（⌃ + ⇧ + 1）")
+                           , tr("保存（⌘ + s）")
+                           , tr("退出（esc）")
+                           , tr("复制到剪切板（return）") };
 
 
     for (auto v = var.begin(); v != var.end(); ++v) {
         int i = var.indexOf(*v);
-        QString name = ":/icons/normal/" + listName[i] + "-normal.svg";
+        QString name = ":/icons/normal/" + listName[i] + ".svg";
 
         *v = new QToolButton();
         (*v)->setToolButtonStyle(Qt::ToolButtonIconOnly);
-        (*v)->setAutoRaise(true);
+        (*v)->setAutoRaise(true); // 自动浮动模式
         (*v)->setIcon(QIcon(name));
+        (*v)->setIconSize(QSize(24, 24));
         (*v)->setToolTip(listToolTip[i]);
         (*v)->setCheckable(true);
         hBoxLayout->addWidget(*v);
