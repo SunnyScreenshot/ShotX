@@ -12,9 +12,11 @@
 int main(int argc, char *argv[])
 {
 
-#if (QT_VERSION > QT_VERSION_CHECK(5,6,0))
-    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-#endif
+//#if (QT_VERSION > QT_VERSION_CHECK(5,6,0))
+//    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+//#endif
+
+    qApp->setAttribute(Qt::AA_UseHighDpiPixmaps);
 
     QApplication a(argc, argv);
 

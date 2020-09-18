@@ -1,14 +1,9 @@
 #include "toolboxwindow.h"
 
-#include <QAction>
 #include <QIcon>
 #include <QToolButton>
 #include <QHBoxLayout>
-#include <QLine>
-#include <QToolBar>
-#include <QColor>
-#include <QPalette>
-#include <QPainter>
+#include <QMouseEvent>
 
 /*!
  * \brief The ToolBoxWindow class 透明工具栏窗口，默认依附在截图窗口的右下角
@@ -23,66 +18,87 @@ ToolBoxWindow::ToolBoxWindow()
 
 void ToolBoxWindow::init()
 {
+    setWindowFlags(Qt::FramelessWindowHint);
+    setAttribute(Qt::WA_TranslucentBackground);
+
     setContentsMargins(0, 0, 0, 0);
     QHBoxLayout *hBoxLayout = new QHBoxLayout(this);
     hBoxLayout->setContentsMargins(4, 4, 4, 4);
+    m_staPos = m_endPos = QPoint();
 
-    toolBtnRect = new QToolButton();
-    toolBtnRect->setIcon(QIcon(QPixmap(":/icons/normal/rectangle-normal.svg")));
-    toolBtnEllipse = new QToolButton();
-    toolBtnEllipse->setIcon(QIcon(":/icons/normal/ellipse-normal.svg"));
-    toolBtnLine = new QToolButton();
-    toolBtnLine->setIcon(QIcon(":/icons/normal/line-normal.svg"));
-    toolBtnArrow = new QToolButton();
-    toolBtnArrow->setIcon(QIcon(":/icons/normal/arrow-normal.svg"));
-    toolBtnPen = new QToolButton();
-    toolBtnPen->setIcon(QIcon(":/icons/normal/pen-normal.svg"));
-    toolBtnText = new QToolButton();
-    toolBtnText->setIcon(QIcon(":/icons/normal/text-normal.svg"));
-    toolBtnBlurry = new QToolButton();
-    toolBtnBlurry->setIcon(QIcon(":/icons/normal/blurry-normal.svg"));
-    toolBtnRevoke = new QToolButton();
-    toolBtnRevoke->setIcon(QIcon(":/icons/normal/revoke-normal.svg"));
-    toolBtnUpload = new QToolButton();
-    toolBtnUpload->setIcon(QIcon(":/icons/normal/update-normal.svg"));
-    toolBtnSave = new QToolButton();
-    toolBtnSave->setIcon(QIcon(":/icons/normal/save-normal.svg"));
-    toolBtnQuit = new QToolButton();
-    toolBtnQuit->setIcon(QIcon(QPixmap(":/icons/normal/quit-normal.svg")));
-    toolBtnOk = new QToolButton();
-    toolBtnOk->setIcon(QIcon(":/icons/normal/ok-normal.svg"));
+    QVector<QToolButton *> var = {  toolBtnRect
+                                  , toolBtnEllipse
+                                  , toolBtnLine
+                                  , toolBtnArrow
+                                  , toolBtnPen
+                                  , toolBtnText
+                                  , toolBtnBlurry
+                                  , toolBtnRevoke
+                                  , toolBtnUpload
+                                  , toolBtnSave
+                                  , toolBtnQuit
+                                  , toolBtnOk};
 
-    hBoxLayout->addWidget(toolBtnRect);
-    hBoxLayout->addWidget(toolBtnEllipse);
-    hBoxLayout->addWidget(toolBtnLine);
-    hBoxLayout->addWidget(toolBtnArrow);
-    hBoxLayout->addWidget(toolBtnPen);
-    hBoxLayout->addWidget(toolBtnText);
-    hBoxLayout->addWidget(toolBtnBlurry);
-    hBoxLayout->addWidget(toolBtnRevoke);
-    hBoxLayout->addWidget(toolBtnUpload);
-    hBoxLayout->addWidget(toolBtnSave);
-    hBoxLayout->addWidget(toolBtnQuit);
-    hBoxLayout->addWidget(toolBtnOk);
+    QStringList listName = {"rectangle"
+                           , "ellipse"
+                           , "line"
+                           , "arrow"
+                           , "pen"
+                           , "text"
+                           , "blurry"
+                           , "revoke"
+                           , "update"
+                           , "save"
+                           , "quit"
+                           , "ok" };
 
-    QToolBar *toolBar = new QToolBar("test tool bar");
-
-//    setWindowOpacity(0.7);
-
-//    QPalette pal = palette();
+    QStringList listToolTip = {tr("矩形")
+                           , tr("椭圆")
+                           , tr("直线")
+                           , tr("箭头")
+                           , tr("笔")
+                           , tr("文字")
+                           , tr("模糊")
+                           , tr("回退")
+                           , tr("上传")
+                           , tr("保存")
+                           , tr("退出")
+                           , tr("复制到剪切板") };
 
 
-//    pal.setColor(QPalette::Background, QColor(0x00,0xff,0x00,0x00));
+    for (auto v = var.begin(); v != var.end(); ++v) {
+        int i = var.indexOf(*v);
+        QString name = ":/icons/normal/" + listName[i] + "-normal.svg";
 
+        *v = new QToolButton();
+        (*v)->setToolButtonStyle(Qt::ToolButtonIconOnly);
+        (*v)->setAutoRaise(true);
+        (*v)->setIcon(QIcon(name));
+        (*v)->setToolTip(listToolTip[i]);
+        (*v)->setCheckable(true);
+        hBoxLayout->addWidget(*v);
+    }
 
-//    setPalette(pal);
 }
 
-void ToolBoxWindow::paintEvent(QPaintEvent *event)
+void ToolBoxWindow::mousePressEvent(QMouseEvent *event)
 {
-    QPainter p(this);
-
-    p.setCompositionMode( QPainter::CompositionMode_Clear );
-
-    p.fillRect( 10, 10, 300, 300, Qt::SolidPattern );
+    m_endPos = m_staPos = event->globalPos();
+    m_topLeftPos = pos();
 }
+
+void ToolBoxWindow::mouseMoveEvent(QMouseEvent *event)
+{
+    if (!m_staPos.isNull()) {
+        m_endPos = event->globalPos();
+        move(m_topLeftPos + m_endPos - m_staPos);
+    }
+}
+
+void ToolBoxWindow::mouseReleaseEvent(QMouseEvent *event)
+{
+    Q_UNUSED(event)
+    m_endPos = m_staPos = QPoint();
+}
+
+

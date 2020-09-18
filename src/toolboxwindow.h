@@ -13,7 +13,19 @@ public:
     ToolBoxWindow();
     void init();
 
+
+
+    // QWidget interface
+protected:
+    void mousePressEvent(QMouseEvent *event) override;
+    void mouseMoveEvent(QMouseEvent *event) override;
+    void mouseReleaseEvent(QMouseEvent *event) override;
+
 private:
+
+    QPoint       m_topLeftPos;
+    QPoint       m_staPos;
+    QPoint       m_endPos;
     QToolButton *toolBtnRect;        // 矩形
     QToolButton *toolBtnEllipse;     // 椭圆
     QToolButton *toolBtnLine;        // 线
@@ -27,9 +39,6 @@ private:
     QToolButton *toolBtnQuit;        // 推出截图
     QToolButton *toolBtnOk;          // 完成，图片暂存在剪切板
 
-    // QWidget interface
-protected:
-    void paintEvent(QPaintEvent *event) override;
 };
 
 #endif // TOOLBOXWINDOW_H
