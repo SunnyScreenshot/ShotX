@@ -4,6 +4,7 @@
 #include <QToolButton>
 #include <QHBoxLayout>
 #include <QMouseEvent>
+#include <QDebug>
 
 /*!
  * \brief The ToolBoxWindow class 透明工具栏窗口，默认依附在截图窗口的右下角
@@ -12,8 +13,6 @@
 ToolBoxWindow::ToolBoxWindow()
 {
     init();
-
-
 }
 
 void ToolBoxWindow::init()
@@ -26,18 +25,18 @@ void ToolBoxWindow::init()
     hBoxLayout->setContentsMargins(4, 4, 4, 4);
     m_staPos = m_endPos = QPoint();
 
-    QVector<QToolButton *> var = {  toolBtnRect
-                                  , toolBtnEllipse
-                                  , toolBtnLine
-                                  , toolBtnArrow
-                                  , toolBtnPen
-                                  , toolBtnText
-                                  , toolBtnMosaic
-                                  , toolBtnRevoke
-                                  , toolBtnUpload
-                                  , toolBtnDownload
-                                  , toolBtnExit
-                                  , toolBtnCopy };
+    QVector<QToolButton *> var = {  m_toolBtnRect
+                                  , m_toolBtnEllipse
+                                  , m_toolBtnLine
+                                  , m_toolBtnArrow
+                                  , m_toolBtnPen
+                                  , m_toolBtnText
+                                  , m_toolBtnMosaic
+                                  , m_toolBtnRevoke
+                                  , m_toolBtnUpload
+                                  , m_toolBtnDownload
+                                  , m_toolBtnExit
+                                  , m_toolBtnCopy };
 
     QStringList listName = {"rectangle"
                            , "ellipse"
@@ -78,8 +77,11 @@ void ToolBoxWindow::init()
         (*v)->setToolTip(listToolTip[i]);
         (*v)->setCheckable(true);
         hBoxLayout->addWidget(*v);
+
+        qDebug()<< v << *v << &v << var[i];
     }
 
+    // ToDo: 2020-09-21 后面几个要设置禁用 “setCheckable(false)”，且 *v 和 m_toolBtnxxxx 好像不是同一个？后者依旧为空
 }
 
 void ToolBoxWindow::mousePressEvent(QMouseEvent *event)

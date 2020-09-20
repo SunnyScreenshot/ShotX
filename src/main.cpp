@@ -7,6 +7,7 @@
 #include <QFrame>
 #include <QGuiApplication>
 #include "toolboxwindow.h"
+#include <QToolButton>
 
 
 int main(int argc, char *argv[])
@@ -20,23 +21,11 @@ int main(int argc, char *argv[])
 
     QApplication a(argc, argv);
 
-//    TrayIconWindow *trayIcon = new TrayIconWindow();
+    TrayIconWindow *trayIcon = new TrayIconWindow();
 //    trayIcon->show();
 
-//    ScreenShots shot;
-//    shot.show();
-
-//    QRect rect(5, 5, 10 , 5);
-//    qDebug()<<"---1--"<<rect;
-//    rect.setBottomRight(rect.bottomRight() + QPoint(1, 1) + QPoint(4, 3));
-//    qDebug()<<"---2--"<<rect;
-//    rect.setWidth(10);
-//    rect.setHeight(5);
-//    qDebug()<<"---3---"<<rect;
-
-
-    ToolBoxWindow toolBox;
-    toolBox.show();
+    //ToDo: 2020-09-21 有一个 bug，刚开始初始化的时候，单击托盘的时候，其“焦点”还是在托盘上(s)，
+    //                 而没有转移到截图窗口上，所以得手动点击一下，才可以进行开始截图。而双击则不会有此问题（Mac 上）
 
     return a.exec();
 }

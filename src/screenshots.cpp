@@ -12,13 +12,17 @@
 #include <QGuiApplication>
 #include <QScreen>
 #include <QCursor>
+#include "toolboxwindow.h"
 
 #define CURR_TIME QDateTime::currentDateTime().toString("yyyy-MM-dd hh-mm-ss-zzz")
 
 ScreenShots::ScreenShots()
 {
+    qDebug()<<"构造函数";
     init();
     m_sysInfo = new SystemInfo();
+    m_toolBox = new ToolBoxWindow();
+    m_toolBox->setParent(this);
 
     pixmap();      // 捕获原图和处理后的背景图
     basePixmap();
@@ -32,8 +36,19 @@ ScreenShots::~ScreenShots()
     delete m_sysInfo;
 }
 
+/*!
+ * \brief ScreenShots::instances 单例模式，唯一的构建方式
+ * \return
+ */
+ScreenShots *ScreenShots::instances()
+{
+    static ScreenShots instances;  // 局部静态变量
+    return &instances;
+}
+
 void ScreenShots::init()
 {
+    setWindowTitle("ScreenShots");
     m_mouseTracking = false;
     QPoint posNull;
     m_rect = QRect();
@@ -275,10 +290,22 @@ bool ScreenShots::DectionAndSetMouseTracking(bool b)
     return m_mouseTracking;
 }
 
+QRect ScreenShots::rootRect()
+{
+    return m_rect;
+}
+
 void ScreenShots::keyPressEvent(QKeyEvent *event)
 {
-    if (event->key() == Qt::Key_Escape)
+    switch (event->key()) {
+    case Qt::Key_Escape : {
+        qDebug()<<"---Qt::Key_Escape---";
         close();
+        break;
+    }
+    default:
+        break;
+    }
 }
 
 void ScreenShots::mousePressEvent(QMouseEvent *event)
@@ -426,6 +453,15 @@ void ScreenShots::paintEvent(QPaintEvent *event)
         drawAnchor(pa);
     }
 
+    m_toolBox->move(m_rect.right() - m_toolBox->width(), m_rect.bottom());
+    if (m_rect.isValid())
+        m_toolBox->show();
+    else
+        m_toolBox->hide();
+
+    // 测试代码:
+//    m_toolBox->setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint);   // 窗口置顶 + 隐藏标题栏
+//    setWindowFlags(Qt::WindowStaysOnTopHint);
 //    int x1 = m_rect.x();
 //    int y1 = m_rect.y();
 //    int x2 = m_rect.x() + m_rect.width();

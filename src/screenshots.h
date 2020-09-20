@@ -34,19 +34,22 @@ enum PosArrow {                                         // 鼠标在线框时候
     UnKnown
 };
 
+class ToolBoxWindow;
 class ScreenShots : public QWidget
 {
     Q_OBJECT
 public:
-    ScreenShots();
     ~ScreenShots();
 
+    static ScreenShots *instances();
     void init();
     QRect setCurrRect();                                // 判断当前矩形的大小
-    PosType isInArea(QPoint pos, int width = g_width);
+    PosType isInArea(QPoint pos, int width = g_width);  // 判断鼠标是否在截图矩形之中
     bool DectionAndSetMouseTracking(bool b = false);    // 检测并且开启鼠标跟踪
+    QRect rootRect();
 
 private:
+    ScreenShots();                                      // 构造函数为私有
     QPoint offset();                                    // 偏移量（m_moveEndPos - m_moveStaPos）
     void updateCursor(QPoint pos, int width = 0);       // 依据光标和矩形所处的位置，刷新鼠标形状
     const QPixmap *pixmap();
@@ -64,8 +67,7 @@ protected:
 
 private:
     bool   m_mouseTracking;                             // 鼠标跟踪是否开启标志
-    QRect  m_rect;
-    QRect  m_tempRect;
+    QRect  m_rect;                                      // 截图矩形框大小（前台）
     QPoint m_staPos;
     QPoint m_endPos;
     QPoint m_moveStaPos;
@@ -76,10 +78,11 @@ private:
     QPoint m_trackingEndPos;
     ScreenTypes m_screenType;
 
-    QPixmap    *m_pixmap;                               // 原图
-    QPixmap    *m_basePixmap;                           // 背景图(= 原图 + 灰色)
-    QPixmap    *m_savePixmap;                           // 保存图；
-    SystemInfo *m_sysInfo;
+    QPixmap       *m_pixmap;                               // 原图
+    QPixmap       *m_basePixmap;                           // 背景图(= 原图 + 灰色)
+    QPixmap       *m_savePixmap;                           // 保存图；
+    SystemInfo    *m_sysInfo;                              // 物理屏幕基础信息
+    ToolBoxWindow   *m_toolBox;     // 修改截图的工具箱
 };
 
 #endif // SCREENSHOTS_H

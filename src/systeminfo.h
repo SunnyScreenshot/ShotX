@@ -26,6 +26,7 @@ private:
     QScreen *m_screen;
     QDesktopWidget *m_deskWid;
     QList<QScreen *> m_listScreen;
+
 };
 
 #endif // SYSTEMINFO_H
