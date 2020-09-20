@@ -67,6 +67,7 @@ protected:
 
 private:
     bool   m_mouseTracking;                             // 鼠标跟踪是否开启标志
+    bool   m_cursor;                                    // 鼠标样式是否修改标志
     QRect  m_rect;                                      // 截图矩形框大小（前台）
     QPoint m_staPos;
     QPoint m_endPos;
@@ -82,7 +83,7 @@ private:
     QPixmap       *m_basePixmap;                           // 背景图(= 原图 + 灰色)
     QPixmap       *m_savePixmap;                           // 保存图；
     SystemInfo    *m_sysInfo;                              // 物理屏幕基础信息
-    ToolBoxWindow   *m_toolBox;     // 修改截图的工具箱
+    ToolBoxWindow *m_toolBox;                              // 修改截图的工具箱
 };
 
 #endif // SCREENSHOTS_H

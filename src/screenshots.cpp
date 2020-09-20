@@ -50,6 +50,7 @@ void ScreenShots::init()
 {
     setWindowTitle("ScreenShots");
     m_mouseTracking = false;
+    m_cursor = false;
     QPoint posNull;
     m_rect = QRect();
     m_staPos = m_endPos = posNull;
@@ -254,7 +255,7 @@ PosArrow ScreenShots::posArrow(QPoint pos, int width)
  */
 PosType ScreenShots::isInArea(QPoint pos, int width)
 {
-    if (m_rect.isEmpty())
+    if (m_rect.isEmpty() || m_cursor)
         return PosType::Other;
 
     int w = 2 * width;
@@ -268,7 +269,8 @@ PosType ScreenShots::isInArea(QPoint pos, int width)
             return PosType::Contains;
         } else {                           // 点在矩形边界上
 //            qDebug()<<"--c--"<<pos<<"点在矩形边界上";
-            updateCursor(pos, width);
+            if (m_mouseTracking)
+                updateCursor(pos, width);
             return PosType::Cross;
         }
     } else {                                // 点在矩形外部（不含边界）
@@ -316,6 +318,7 @@ void ScreenShots::mousePressEvent(QMouseEvent *event)
         m_screenType = ScreenType::Select;
 
     PosType posType = isInArea(event->pos());
+    m_cursor = true;
     switch (posType) {
     case PosType::Contains:       // 点在矩形内部 (不含边界)
         m_screenType = ScreenType::Move;
@@ -372,6 +375,7 @@ void ScreenShots::mouseMoveEvent(QMouseEvent *event)
 
 void ScreenShots::mouseReleaseEvent(QMouseEvent *event)
 {
+    m_cursor = false;
     if (m_screenType == ScreenType::Select) {
         m_endPos = event->pos();
     } else if (m_screenType == ScreenType::Move){
@@ -430,7 +434,7 @@ void ScreenShots::paintEvent(QPaintEvent *event)
             m_rect.setTopLeft(m_rect.topLeft() + pos);
             break;
         default:
-            qDebug()<<"----PosArrow::UnKnown---";  // 实时检测 m_sizeStaPos（move 状态），要修改一下
+            qDebug()<<"----PosArrow::UnKnown---"<<pos;  // 实时检测 m_sizeStaPos（move 状态），要修改一下
             break;
         }
     }
@@ -453,7 +457,7 @@ void ScreenShots::paintEvent(QPaintEvent *event)
         drawAnchor(pa);
     }
 
-    m_toolBox->move(m_rect.right() - m_toolBox->width(), m_rect.bottom());
+    m_toolBox->move(m_rect.right() - m_toolBox->width(), m_rect.bottom() + g_width + 1);
     if (m_rect.isValid())
         m_toolBox->show();
     else
