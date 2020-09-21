@@ -75,8 +75,8 @@ private:
     QPoint m_moveEndPos;
     QPoint m_sizeStaPos;
     QPoint m_sizeEndPos;
-    QPoint m_trackingStaPos;
-    QPoint m_trackingEndPos;
+    QPoint m_translate;                                    // 快捷键移动矩形位置
+    QMargins m_sizeMargins;                                // 快捷键调整矩形大小
     ScreenTypes m_screenType;
 
     QPixmap       *m_pixmap;                               // 原图

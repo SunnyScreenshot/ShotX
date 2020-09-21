@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QFrame>
 #include <QGuiApplication>
+#include <QRect>
 #include "toolboxwindow.h"
 #include <QToolButton>
 
@@ -22,6 +23,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     TrayIconWindow *trayIcon = new TrayIconWindow();
+
 //    trayIcon->show();
 
     //ToDo: 2020-09-21 有一个 bug，刚开始初始化的时候，单击托盘的时候，其“焦点”还是在托盘上(s)，

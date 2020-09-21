@@ -51,12 +51,13 @@ void ScreenShots::init()
     setWindowTitle("ScreenShots");
     m_mouseTracking = false;
     m_cursor = false;
+    m_translate = QPoint(0, 0);
+    m_sizeMargins = QMargins(0, 0, 0, 0);
     QPoint posNull;
     m_rect = QRect();
     m_staPos = m_endPos = posNull;
     m_moveStaPos = m_moveEndPos = posNull;
     m_sizeStaPos = m_sizeEndPos = posNull;
-    m_trackingStaPos = m_trackingEndPos = posNull;
     m_pixmap = m_basePixmap = m_savePixmap = nullptr;
     m_sysInfo = nullptr;
     m_screenType = ScreenType::Select;
@@ -299,14 +300,34 @@ QRect ScreenShots::rootRect()
 
 void ScreenShots::keyPressEvent(QKeyEvent *event)
 {
-    switch (event->key()) {
-    case Qt::Key_Escape : {
-        qDebug()<<"---Qt::Key_Escape---";
+    const int Grow = 10;
+    if (event->key() == Qt::Key_Escape) {
         close();
-        break;
-    }
-    default:
-        break;
+        qDebug()<<"---Key_Escape---";
+    } else if (event->key() == Qt::Key_Up || event->key() == Qt::Key_W) {
+        m_translate.setY(m_translate.y() - Grow);
+    } else if (event->key() == Qt::Key_Down || event->key() == Qt::Key_S) {
+        m_translate.setY(m_translate.y() + Grow);
+    } else if (event->key() == Qt::Key_Left || event->key() == Qt::Key_A) {
+        m_translate.setX(m_translate.x() - Grow);
+    } else if (event->key() == Qt::Key_Right || event->key() == Qt::Key_D) {
+        m_translate.setX(m_translate.x() + Grow);
+    } else if (event->modifiers() == Qt::ControlModifier && event->key() == Qt::Key_Up) {
+        m_sizeMargins.setTop(m_sizeMargins.top() + Grow);
+    } else if (event->modifiers() == Qt::ControlModifier && event->key() == Qt::Key_Down) {
+        m_sizeMargins.setBottom(m_sizeMargins.bottom() + Grow);
+    } else if (event->modifiers() == Qt::ControlModifier && event->key() == Qt::Key_Left) {
+        m_sizeMargins.setLeft(m_sizeMargins.left() + Grow);
+    } else if (event->modifiers() == Qt::ControlModifier && event->key() == Qt::Key_Right) {
+        m_sizeMargins.setRight(m_sizeMargins.right() + Grow);
+    } else if (event->modifiers() == (Qt::ControlModifier | Qt::ShiftModifier) && event->key() == Qt::Key_Up) {
+        m_sizeMargins.setTop(m_sizeMargins.top() - Grow);
+    } else if (event->modifiers() == (Qt::ControlModifier | Qt::ShiftModifier) && event->key() == Qt::Key_Down) {
+        m_sizeMargins.setBottom(m_sizeMargins.bottom() - Grow);
+    } else if (event->modifiers() == (Qt::ControlModifier | Qt::ShiftModifier) && event->key() == Qt::Key_Left) {
+        m_sizeMargins.setLeft(m_sizeMargins.left() - Grow);
+    } else if (event->modifiers() == (Qt::ControlModifier | Qt::ShiftModifier) && event->key() == Qt::Key_Right) {
+        m_sizeMargins.setRight(m_sizeMargins.right() - Grow);
     }
 }
 
@@ -404,7 +425,9 @@ void ScreenShots::paintEvent(QPaintEvent *event)
     QPainter pa(this);
     pa.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);   // 抗锯齿 + 平滑边缘处理
 
-    m_rect = setCurrRect();
+    setCurrRect();
+    m_rect += m_sizeMargins;
+    m_rect.translate(m_translate);
 
     QPoint pos = m_sizeEndPos - m_sizeStaPos;
     if ((!pos.isNull()) && (m_screenType == ScreenType::SetSize)) {
