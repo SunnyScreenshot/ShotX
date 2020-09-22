@@ -5,6 +5,7 @@
 #include <QHBoxLayout>
 #include <QMouseEvent>
 #include <QDebug>
+#include <QPainter>
 
 /*!
  * \brief The ToolBoxWindow class 透明工具栏窗口，默认依附在截图窗口的右下角
@@ -21,35 +22,22 @@ void ToolBoxWindow::init()
 //    setAttribute(Qt::WA_TranslucentBackground);
 
     setContentsMargins(0, 0, 0, 0);
-    QHBoxLayout *hBoxLayout = new QHBoxLayout(this);
+    QHBoxLayout   *hBoxLayout = new QHBoxLayout(this);
     hBoxLayout->setContentsMargins(4, 4, 4, 4);
     m_staPos = m_endPos = QPoint();
 
-    QVector<QToolButton *> var = {  m_toolBtnRect
-                                  , m_toolBtnEllipse
-                                  , m_toolBtnLine
-                                  , m_toolBtnArrow
-                                  , m_toolBtnPen
-                                  , m_toolBtnText
-                                  , m_toolBtnMosaic
-                                  , m_toolBtnRevoke
-                                  , m_toolBtnUpload
-                                  , m_toolBtnDownload
-                                  , m_toolBtnExit
-                                  , m_toolBtnCopy };
-
-    QStringList listName = {"rectangle"
-                           , "ellipse"
-                           , "line"
-                           , "arrow"
-                           , "pen"
-                           , "text"
-                           , "mosaic"
-                           , "revoke"
-                           , "update"
-                           , "download"
-                           , "exit"
-                           , "copy" };
+    var.fill(nullptr, 11);  // 初始化
+    m_listName << "rectangle"
+               << "ellipse"
+               << "line"
+               << "arrow"
+               << "pen"
+               << "text"
+               << "mosaic"
+               << "revoke"
+               << "update"
+               << "download"
+               << "copy";
 
     QStringList listToolTip = {tr("矩形（⌘ + 1）")
                            , tr("椭圆（⌘ + 2）")
@@ -61,27 +49,25 @@ void ToolBoxWindow::init()
                            , tr("撤销（⌘ + z）")
                            , tr("上传（⌃ + ⇧ + 1）")
                            , tr("保存（⌘ + s）")
-                           , tr("退出（esc）")
                            , tr("复制到剪切板（return）") };
 
+    for (int i = 0; i < m_listName.count(); ++i) {
+        QString name = ":/icons/normal/" + m_listName[i] + ".svg";
 
-    for (auto v = var.begin(); v != var.end(); ++v) {
-        int i = var.indexOf(*v);
-        QString name = ":/icons/normal/" + listName[i] + ".svg";
+        var[i] = new QToolButton();
+        var[i]->setToolButtonStyle(Qt::ToolButtonIconOnly);
+        var[i]->setAutoRaise(true); // 自动浮动模式
+        var[i]->setIcon(QIcon(name));
+        var[i]->setIconSize(QSize(16, 16));
+        var[i]->setToolTip(listToolTip[i]);
 
-        *v = new QToolButton();
-        (*v)->setToolButtonStyle(Qt::ToolButtonIconOnly);
-        (*v)->setAutoRaise(true); // 自动浮动模式
-        (*v)->setIcon(QIcon(name));
-        (*v)->setIconSize(QSize(24, 24));
-        (*v)->setToolTip(listToolTip[i]);
-        (*v)->setCheckable(true);
-        hBoxLayout->addWidget(*v);
+        if (i < 7)
+            var[i]->setCheckable(true);
+        else
+            var[i]->setCheckable(false);
 
-        qDebug()<< v << *v << &v << var[i];
+        hBoxLayout->addWidget(var[i]);
     }
-
-    // ToDo: 2020-09-21 后面几个要设置禁用 “setCheckable(false)”，且 *v 和 m_toolBtnxxxx 好像不是同一个？后者依旧为空
 }
 
 void ToolBoxWindow::mousePressEvent(QMouseEvent *event)
@@ -102,6 +88,38 @@ void ToolBoxWindow::mouseReleaseEvent(QMouseEvent *event)
 {
     Q_UNUSED(event)
     m_endPos = m_staPos = QPoint();
+}
+
+void ToolBoxWindow::paintEvent(QPaintEvent *event)
+{
+    Q_UNUSED(event)
+
+    updateToolBtnIcon();
+
+    QPainter pa(this);
+    pa.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
+    pa.setPen(Qt::NoPen);
+    pa.setBrush(QColor(255, 255, 255, 0.7 * 255));
+
+    const int round = 4;
+    pa.drawRoundedRect(contentsRect().adjusted(1, 1, -1, -1), round, round);
+}
+
+/*!
+ * \brief ToolBoxWindow::updateToolBtnIcon 依据 toolBtn 是否被按下，选用不同颜色 svg 图片
+ */
+void ToolBoxWindow::updateToolBtnIcon()
+{
+    for (int i = 0; i < var.count(); ++i) {
+        QString normal = ":/icons/normal/" + m_listName[i] + ".svg";
+        QString pressed = ":/icons/pressed/" + m_listName[i] + ".svg";
+
+        if (var[i]->isChecked()) {
+            var[i]->setIcon(QIcon(pressed));
+        } else {
+            var[i]->setIcon(QIcon(normal));
+        }
+    }
 }
 
 

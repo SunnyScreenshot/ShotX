@@ -9,6 +9,7 @@
 #include <QRect>
 #include "toolboxwindow.h"
 #include <QToolButton>
+#include <QStyleFactory>
 
 
 int main(int argc, char *argv[])
@@ -21,6 +22,11 @@ int main(int argc, char *argv[])
     qApp->setAttribute(Qt::AA_UseHighDpiPixmaps);
 
     QApplication a(argc, argv);
+
+    QStringList listStyle = QStyleFactory::keys();
+    foreach(QString val, listStyle)
+      qDebug()<<val<<"  ";
+    QApplication::setStyle("Fusion");
 
     TrayIconWindow *trayIcon = new TrayIconWindow();
 

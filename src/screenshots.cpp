@@ -189,6 +189,8 @@ void ScreenShots::drawScreenRect(QRect &rect, QPainter &pa)
  */
 void ScreenShots::drawAnchor(QPainter &pa, bool b, int r)
 {
+    if (!b)
+        return;
     pa.setRenderHint(QPainter::Antialiasing, false);
     int x1 = m_rect.left();
     int y1 = m_rect.top();
