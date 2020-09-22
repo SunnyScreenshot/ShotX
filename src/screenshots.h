@@ -46,7 +46,6 @@ public:
     QRect setCurrRect();                                // 判断当前矩形的大小
     PosType isInArea(QPoint pos, int width = g_width);  // 判断鼠标是否在截图矩形之中
     bool DectionAndSetMouseTracking(bool b = false);    // 检测并且开启鼠标跟踪
-    QRect rootRect();
 
 private:
     ScreenShots();                                      // 构造函数为私有

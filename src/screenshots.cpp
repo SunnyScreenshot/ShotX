@@ -104,7 +104,7 @@ const QPixmap *ScreenShots::basePixmap()
         return nullptr;
 
     QPixmap blurPixmap(m_pixmap->size());  // 桌面图片上的灰色层
-    blurPixmap.fill(QColor(255, 255, 255, 50));
+    blurPixmap.fill(QColor(255, 255, 255, 0.2 * 255));
     m_basePixmap = new QPixmap(*m_pixmap);  // 没有 delete
     QPainter pa(m_basePixmap);
     pa.drawPixmap(m_basePixmap->rect(), blurPixmap);
@@ -189,6 +189,7 @@ void ScreenShots::drawScreenRect(QRect &rect, QPainter &pa)
  */
 void ScreenShots::drawAnchor(QPainter &pa, bool b, int r)
 {
+    pa.setRenderHint(QPainter::Antialiasing, false);
     int x1 = m_rect.left();
     int y1 = m_rect.top();
     int x2 = m_rect.right();
@@ -202,7 +203,7 @@ void ScreenShots::drawAnchor(QPainter &pa, bool b, int r)
                            QPoint(x1, (y1 + y2) / 2.0),
                            QPoint(x2, (y1 + y2) / 2.0)};
 
-    pa.setPen(Qt::white);
+    pa.setPen(QPen(Qt::white, 1.5));
     pa.setBrush(QColor(146, 146, 146, 1 * 255));
     foreach (QPoint v, ver) {
         pa.drawEllipse(v, r, r);
@@ -291,11 +292,6 @@ bool ScreenShots::DectionAndSetMouseTracking(bool b)
     m_mouseTracking = b;
     setMouseTracking(m_mouseTracking);
     return m_mouseTracking;
-}
-
-QRect ScreenShots::rootRect()
-{
-    return m_rect;
 }
 
 void ScreenShots::keyPressEvent(QKeyEvent *event)
