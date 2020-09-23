@@ -1,3 +1,4 @@
+#include "screenshots.h"
 #include "toolboxwindow.h"
 
 #include <QIcon>
@@ -6,6 +7,13 @@
 #include <QMouseEvent>
 #include <QDebug>
 #include <QPainter>
+#include <QClipboard>
+#include <QApplication>
+#include <QDate>
+
+class screenshots;
+
+#define CURR_TIME QDateTime::currentDateTime().toString("yyyyMMdd_hhmmss")
 
 /*!
  * \brief The ToolBoxWindow class 透明工具栏窗口，默认依附在截图窗口的右下角
@@ -68,6 +76,9 @@ void ToolBoxWindow::init()
 
         hBoxLayout->addWidget(var[i]);
     }
+
+    connect(var[9], &QToolButton::released, this, &ToolBoxWindow::onDownload);
+    connect(var[10], &QToolButton::released, this, &ToolBoxWindow::onCopy);
 }
 
 void ToolBoxWindow::mousePressEvent(QMouseEvent *event)
@@ -120,6 +131,27 @@ void ToolBoxWindow::updateToolBtnIcon()
             var[i]->setIcon(QIcon(normal));
         }
     }
+}
+
+/*!
+ * \brief ToolBoxWindow::onDownload 保存本地
+ */
+void ToolBoxWindow::onDownload()
+{
+    qDebug()<<"--------------onDownload"<<parent()<<parent()->parent();
+    ScreenShots *screenShot = static_cast<ScreenShots *>(parent());
+    screenShot->savePixmap().save( CURR_TIME + ".png");
+}
+
+/*!
+ * \brief ToolBoxWindow::onCopy 点击复制，会将截图保存在剪切板上
+ */
+void ToolBoxWindow::onCopy()
+{
+    qDebug()<<"--------------onCopy"<<parent()<<parent()->parent();
+    ScreenShots *screenShot = static_cast<ScreenShots *>(parent());
+    QClipboard *clipboard = QApplication::clipboard();
+    clipboard->setPixmap(screenShot->savePixmap());
 }
 
 

@@ -32,7 +32,6 @@ ScreenShots::~ScreenShots()
 {
     delete m_pixmap;
     delete m_basePixmap;
-    delete m_savePixmap;
     delete m_sysInfo;
 }
 
@@ -48,6 +47,7 @@ ScreenShots *ScreenShots::instances()
 
 void ScreenShots::init()
 {
+    setObjectName("screenShots");
     setWindowTitle("ScreenShots");
     m_mouseTracking = false;
     m_cursor = false;
@@ -58,7 +58,7 @@ void ScreenShots::init()
     m_staPos = m_endPos = posNull;
     m_moveStaPos = m_moveEndPos = posNull;
     m_sizeStaPos = m_sizeEndPos = posNull;
-    m_pixmap = m_basePixmap = m_savePixmap = nullptr;
+    m_pixmap = m_basePixmap = nullptr;
     m_sysInfo = nullptr;
     m_screenType = ScreenType::Select;
     DectionAndSetMouseTracking(true);
@@ -296,6 +296,33 @@ bool ScreenShots::DectionAndSetMouseTracking(bool b)
     return m_mouseTracking;
 }
 
+/*!
+ * \brief ScreenShots::rootRect 获取操作系统分辨率下的矩形大小
+ * \return 操作系统分辨率下的矩形大小
+ */
+QRect ScreenShots::rootRect()
+{
+    return m_rect;
+}
+
+/*!
+ * \brief ScreenShots::baseRect 获取物理分辨率下实际矩形大小
+ * \return 物理分辨率下实际矩形大小
+ */
+QRect ScreenShots::baseRect()
+{
+    return QRect(m_rect.topLeft() * m_sysInfo->devicePixelRatio(), m_rect.size() * m_sysInfo->devicePixelRatio());
+}
+
+/*!
+ * \brief ScreenShots::savePixmap 获取实际保存的截图
+ * \return 保存的截图
+ */
+QPixmap ScreenShots::savePixmap()
+{
+    return m_pixmap->copy(baseRect());
+}
+
 void ScreenShots::keyPressEvent(QKeyEvent *event)
 {
     const int Grow = 10;
@@ -466,13 +493,12 @@ void ScreenShots::paintEvent(QPaintEvent *event)
         m_rect.setBottomRight(m_rect.bottomRight() + pos);
     }
 
-    QRect baseRect(m_rect.topLeft() * m_sysInfo->devicePixelRatio(), m_rect.size() * m_sysInfo->devicePixelRatio());  // 后台选中矩形
 
 //    qDebug()<<"---[paintEvent1]"<<m_staPos<<m_endPos<<m_rect<<"   "<<pos<<"   "<<m_moveStaPos<<m_moveEndPos<<QString::number(m_screenType, 10);
 //    qDebug()<<"---->"<< QApplication::desktop()->rect()<<m_pixmap->rect()<<m_basePixmap->rect()<<m_sysInfo->devicePixelRatio();
     pa.drawPixmap(QApplication::desktop()->rect(), *m_basePixmap);
     if (!m_rect.isEmpty()) {
-        pa.drawPixmap(m_rect, m_pixmap->copy(baseRect));
+        pa.drawPixmap(m_rect, m_pixmap->copy(baseRect()));  // baseRect() 后台选中矩形
         drawScreenRect(m_rect, pa);
 
         drawAnchor(pa);

@@ -6,7 +6,7 @@
 
 class QStringList;
 class QToolButton;
-
+class ScreenShots;
 class ToolBoxWindow : public QFrame
 {
     Q_OBJECT
@@ -22,6 +22,10 @@ protected:
 
 private:
     void updateToolBtnIcon();
+
+public slots:
+    void onDownload();
+    void onCopy();
 
 private:
     QPoint         m_topLeftPos;
