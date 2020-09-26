@@ -10,6 +10,7 @@
 #include <QClipboard>
 #include <QApplication>
 #include <QDate>
+#include <QFileDialog>
 
 class screenshots;
 
@@ -138,9 +139,14 @@ void ToolBoxWindow::updateToolBtnIcon()
  */
 void ToolBoxWindow::onDownload()
 {
-    qDebug()<<"--------------onDownload"<<parent()<<parent()->parent();
+    QString fileter = "图片文件(*.png);;图片文件(*.jpg);;所有文件(*.*)";
+    QString fileNmae = QFileDialog::getSaveFileName(this, tr("保存图片"), "ShotX" + CURR_TIME + ".png", fileter);
     ScreenShots *screenShot = static_cast<ScreenShots *>(parent());
     screenShot->savePixmap().save( CURR_TIME + ".png");
+    if (!fileNmae.isEmpty())
+        screenShot->savePixmap().save( fileNmae);
+
+    qDebug()<<"--------------onDownload"<<parent()<<parent()->parent()<<fileNmae;
 }
 
 /*!
