@@ -154,10 +154,10 @@ void ToolBoxWindow::onDownload()
  */
 void ToolBoxWindow::onCopy()
 {
-    qDebug()<<"--------------onCopy"<<parent()<<parent()->parent();
     ScreenShots *screenShot = static_cast<ScreenShots *>(parent());
     QClipboard *clipboard = QApplication::clipboard();
     clipboard->setPixmap(screenShot->savePixmap());
+    qDebug()<<"--------------onCopy"<<parent()<<parent()->parent();
 }
 
 
