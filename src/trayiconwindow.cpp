@@ -3,6 +3,9 @@
 #include <QMenu>
 #include <QDebug>
 #include <QKeyEvent>
+
+#include <QHotkey>
+
 #include "screenshots.h"
 
 TrayIconWindow::TrayIconWindow()
@@ -11,6 +14,11 @@ TrayIconWindow::TrayIconWindow()
 
     connect(m_trayIcon, &QSystemTrayIcon::activated, this, &TrayIconWindow::onActiveTray);
     connect(m_actMainWindow, &QAction::triggered, this, &TrayIconWindow::onActMainWindow);
+
+    QHotkey *hotkey = new QHotkey(QKeySequence("Option+P"), true); // Alt 和 P 之间不能有空格
+    qDebug() << "Is Registered: " << hotkey->isRegistered();
+
+    connect(hotkey, &QHotkey::activated, this, &TrayIconWindow::onCreateScreen);
 }
 
 TrayIconWindow::~TrayIconWindow()
@@ -64,6 +72,15 @@ void TrayIconWindow::onActMainWindow()
     qDebug()<<"---配置---";
     m_mainWindow = new MainWindow();
     m_mainWindow->show();
+}
+
+void TrayIconWindow::onCreateScreen()
+{
+    if (m_screenShot != nullptr)
+        return;
+
+    m_screenShot = ScreenShots::instances();
+    m_screenShot->show();
 }
 
 void TrayIconWindow::keyPressEvent(QKeyEvent *event)

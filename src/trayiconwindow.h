@@ -19,9 +19,12 @@ public:
 
     void init();
 
+
 public slots:
     void onActiveTray(QSystemTrayIcon::ActivationReason reason);
     void onActMainWindow();
+    void onCreateScreen();
+
 
 protected:
     void keyPressEvent(QKeyEvent *event) override;
