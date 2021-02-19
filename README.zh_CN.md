@@ -1,13 +1,13 @@
 # ShotX
 
+
 <div align=center>
 <img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2020/logo.svg" height="240" width="240" />
 </div>
 
-
 <br>
 
-## Description
+## 项目介绍
 
 <p align="right"><br><a href="README.md">English</a> | <a href="README.zh_CN.md">简体中文</a></p>
 
@@ -19,25 +19,26 @@
 `Linux`:  ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/xmuli/ShotX/Ubuntu)
 `Windows`: ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/xmuli/ShotX/Windows)
 
-<br>
-
-> A light and fast screenshot software `ShotX`
 
 <br>
 
-If it helps, <font color=#FE7207 size=4 face="young round">you can click on the project's <img src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/master/project_log/20190709023321.png" height="18" width="18"/> **Star** and <img src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/master/project_log/20190709023317.png" height="18" width="18"/>**Fork** for two icons that are easy to lift between hands, quite a nod,</font> hands down.
+> 一款轻的、迅速的截图软件 `ShotX`
 
 <br>
 
-## Author.
-
-<font color=#70AD47 size=4 face="幼圆">**偕臧 (xmuli):** </font> [xmuli.tech](https://xmuli.tech/)
+若是帮助到了你，<font color=#FE7207  size=4 face="幼圆">可以点击该项目的的<img src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/master/project_log/20190709023321.png" height="18" width="18"/>   **Star** 和<img src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/master/project_log/20190709023317.png" height="18" width="18"/>  **Fork** 的两个图标，方便抬手之间，相当点个赞，</font>手有余香。
 
 <br>
 
-## Protocol.
+## 作者：
+
+<font color=#70AD47 size=4 face="幼圆">**偕臧 (xmuli)：** </font> [xmuli.tech](https://xmuli.tech/)
+
+<br>
+
+## 协议：
 
 <img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2020/MIT.png" width="25%"/>
 
-This project is distributed and used based on the `MIT` protocol. For more information, see [protocol file](/LICENSE).
+该项目基于 `MIT` 协议进行分发和使用。 有关更多信息，请参阅[协议文件](/LICENSE)。
 
