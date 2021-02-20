@@ -11,14 +11,9 @@
 
 <p align="right"><br><a href="README.md">English</a> | <a href="README.zh_CN.md">简体中文</a></p>
 
- ![](https://img.shields.io/badge/language-c++-orange.svg) ![](https://img.shields.io/badge/language-Qt-orange.svg) ![](https://img.shields.io/github/license/xmuli/ShotX) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/xmuli/ShotX)
+![](https://img.shields.io/badge/language-c++-orange.svg) ![](https://img.shields.io/badge/language-Qt-orange.svg) ![](https://img.shields.io/github/license/xmuli/ShotX) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/xmuli/ShotX)
 
- ![GitHub All Releases](https://img.shields.io/github/downloads/xmuli/ShotX/total)  ![GitHub stars](https://img.shields.io/github/stars/xmuli/ShotX?style=social) ![GitHub forks](https://img.shields.io/github/forks/xmuli/ShotX?style=social) 
-
-`MacOS`:  ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/xmuli/ShotX/MacOS)
-`Linux`:  ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/xmuli/ShotX/Ubuntu)
-`Windows`: ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/xmuli/ShotX/Windows)
-
+[![macos-badge](https://github.com/xmuli/ShotX/workflows/MacOS/badge.svg)](https://github.com/xmuli/ShotX/workflows/MacOS/badge.svg)  [![win-badge](https://github.com/xmuli/ShotX/workflows/Windows/badge.svg)](https://github.com/xmuli/ShotX/workflows/Windows/badge.svg)  [![ubuntu-badge](https://github.com/xmuli/ShotX/workflows/Ubuntu/badge.svg)](https://github.com/xmuli/ShotX/workflows/Ubuntu/badge.svg)   ![GitHub stars](https://img.shields.io/github/stars/xmuli/ShotX?style=social) ![GitHub forks](https://img.shields.io/github/forks/xmuli/ShotX?style=social) 
 
 <br>
 
