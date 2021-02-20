@@ -64,8 +64,8 @@ void ScreenShots::init()
     DectionAndSetMouseTracking(true);
 
     setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint);   // 窗口置顶 + 隐藏标题栏
-//    setFixedSize(QApplication::desktop()->rect().size());
-    setFixedSize(QSize(1600, 800));
+    setFixedSize(QApplication::desktop()->rect().size());
+//    setFixedSize(QSize(1600, 800));
 //    setFixedSize(QGuiApplication::screenAt(QCursor::pos())->size());    // 用 resize() 的话，发现会操蛋的蛋疼
 
 ////#if (QT_VERSION >= QT_VERSION_CHECK(5, 10, 0))

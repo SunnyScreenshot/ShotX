@@ -35,8 +35,8 @@ void ToolBoxWindow::init()
     hBoxLayout->setContentsMargins(4, 4, 4, 4);
     m_staPos = m_endPos = QPoint();
 
-    var.fill(nullptr, 11);  // 初始化
-    m_listName << "rectangle"
+    var.fill(nullptr, 2);  // 初始化
+    m_listName /*<< "rectangle"
                << "ellipse"
                << "line"
                << "arrow"
@@ -44,11 +44,11 @@ void ToolBoxWindow::init()
                << "text"
                << "mosaic"
                << "revoke"
-               << "update"
+               << "update"*/
                << "download"
                << "copy";
 
-    QStringList listToolTip = {tr("矩形（⌘ + 1）")
+    QStringList listToolTip = {/*tr("矩形（⌘ + 1）")
                            , tr("椭圆（⌘ + 2）")
                            , tr("直线（⌘ + 3）")
                            , tr("箭头（⌘ + 4）")
@@ -57,7 +57,7 @@ void ToolBoxWindow::init()
                            , tr("模糊（⌘ + 7）")
                            , tr("撤销（⌘ + z）")
                            , tr("上传（⌃ + ⇧ + 1）")
-                           , tr("保存（⌘ + s）")
+                           , */tr("保存（⌘ + s）")
                            , tr("复制到剪切板（return）") };
 
     for (int i = 0; i < m_listName.count(); ++i) {
@@ -70,16 +70,16 @@ void ToolBoxWindow::init()
         var[i]->setIconSize(QSize(16, 16));
         var[i]->setToolTip(listToolTip[i]);
 
-        if (i < 7)
-            var[i]->setCheckable(true);
-        else
+//        if (i < 7)
+//            var[i]->setCheckable(true);
+//        else
             var[i]->setCheckable(false);
 
         hBoxLayout->addWidget(var[i]);
     }
 
-    connect(var[9], &QToolButton::released, this, &ToolBoxWindow::onDownload);
-    connect(var[10], &QToolButton::released, this, &ToolBoxWindow::onCopy);
+    connect(var[0], &QToolButton::released, this, &ToolBoxWindow::onDownload);
+    connect(var[1], &QToolButton::released, this, &ToolBoxWindow::onCopy);
 }
 
 void ToolBoxWindow::mousePressEvent(QMouseEvent *event)
