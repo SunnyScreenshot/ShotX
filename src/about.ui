@@ -86,7 +86,7 @@
    <item>
     <widget class="QLabel" name="label_3">
      <property name="text">
-      <string>截图 ：快捷鍵 crtl+F1 、单击托盘</string>
+      <string>截图 ：快捷鍵 crtl+F1 、单击托盘；Esc 取消</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
