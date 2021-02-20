@@ -1,0 +1,10 @@
+Package: shotx
+Version: 1.0-1
+Architecture: amd64
+Maintainer: xmuli tech <xmulitech@gmail.com>
+Installed-Size: 10
+Section: unknown
+Priority: optional
+Homepage: <insert the upstream URL, if relevant>
+Description: A light and fast screenshot software
+ A cross-platform open source screenshot software; only the most basic screenshot and save functions
