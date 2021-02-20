@@ -22,7 +22,8 @@ SOURCES += \
     screenshots.cpp \
     systeminfo.cpp \
     toolboxwindow.cpp \
-    trayiconwindow.cpp
+    trayiconwindow.cpp \
+    about.cpp
 
 HEADERS += \
     GuiHelper/guiapplicationhelper.h \
@@ -30,7 +31,8 @@ HEADERS += \
     screenshots.h \
     systeminfo.h \
     toolboxwindow.h \
-    trayiconwindow.h
+    trayiconwindow.h \
+    about.h
 
 include(./3rdparty/QHotkey/qhotkey.pri)
 
@@ -40,3 +42,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += Resources.qrc
+
+FORMS += \
+    about.ui

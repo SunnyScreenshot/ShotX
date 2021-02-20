@@ -4,6 +4,7 @@
 #include <QSystemTrayIcon>
 #include <QWidget>
 #include "mainwindow.h"
+#include "about.h"
 
 //class QSystemTrayIcon;
 class QMenu;
@@ -23,6 +24,7 @@ public:
 public slots:
     void onActiveTray(QSystemTrayIcon::ActivationReason reason);
     void onActMainWindow();
+    void onAbout();
     void onCreateScreen();
 
 
@@ -31,9 +33,11 @@ protected:
 
 private:
     QMenu           *m_menu;
-    QAction         *m_actMainWindow;
-    QAction         *m_actExit;
+//    QAction         *m_actMainWindow;
     MainWindow      *m_mainWindow;
+    QAction         *m_actAbout;
+    About           *m_aboutWindow;
+    QAction         *m_actExit;
     QSystemTrayIcon *m_trayIcon;     // 托盘图标
     ScreenShots     *m_screenShot;
 };

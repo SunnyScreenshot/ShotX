@@ -13,9 +13,10 @@ TrayIconWindow::TrayIconWindow()
     init();
 
     connect(m_trayIcon, &QSystemTrayIcon::activated, this, &TrayIconWindow::onActiveTray);
-    connect(m_actMainWindow, &QAction::triggered, this, &TrayIconWindow::onActMainWindow);
+//    connect(m_actMainWindow, &QAction::triggered, this, &TrayIconWindow::onActMainWindow);
+    connect(m_actAbout, &QAction::triggered, this, &TrayIconWindow::onAbout);
 
-    QHotkey *hotkey = new QHotkey(QKeySequence("Option+P"), true); // Alt 和 P 之间不能有空格
+    QHotkey *hotkey = new QHotkey(QKeySequence("ctrl+F1"), true); // Alt 和 P 之间不能有空格
     qDebug() << "Is Registered: " << hotkey->isRegistered();
 
     connect(hotkey, &QHotkey::activated, this, &TrayIconWindow::onCreateScreen);
@@ -30,9 +31,11 @@ void TrayIconWindow::init()
 {
     m_screenShot = nullptr;
     m_menu = new QMenu();
-    m_actMainWindow = new QAction(tr("偏好设置"));  // 显示主窗口
-    m_actExit = new QAction(tr("退出"));            // 退出
-    m_menu->addAction(m_actMainWindow);
+//    m_actMainWindow = new QAction(tr("偏好设置"));  // 显示主窗口
+//    m_menu->addAction(m_actMainWindow);
+    m_actAbout = new QAction(tr("关于"));               // 显示主窗口
+    m_menu->addAction(m_actAbout);
+    m_actExit = new QAction(tr("退出"));           // 退出
     m_menu->addSeparator();
     m_menu->addAction(m_actExit);
 
@@ -72,6 +75,12 @@ void TrayIconWindow::onActMainWindow()
     qDebug()<<"---配置---";
     m_mainWindow = new MainWindow();
     m_mainWindow->show();
+}
+
+void TrayIconWindow::onAbout()
+{
+    m_aboutWindow = new About();
+    m_aboutWindow->show();
 }
 
 void TrayIconWindow::onCreateScreen()
