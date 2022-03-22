@@ -17,26 +17,14 @@ jobs:
   build:
     name: Build
     # 运行平台， windows-latest目前是windows server 2019
-    runs-on: windows-latest
+    runs-on: windows-2019
     strategy:
       # 矩阵配置
       matrix:
         qt_ver: [5.12.9]
         qt_target: [desktop]
-        # mingw用不了
         # qt_arch: [win64_msvc2017_64, win32_msvc2017, win32_mingw53,win32_mingw73]
         qt_arch: [win64_msvc2017_64, win32_msvc2017]
-        # 从矩阵中除外的配置
-        exclude: 
-          # 不存在5.9.8-win32_msvc2017的版本
-          - qt_ver: 5.9.8
-            qt_arch: win32_msvc2017
-          # mingw用不了
-          # - qt_ver: 5.9.8
-          #   qt_arch: win32_mingw73
-          # - qt_ver: 5.12.6
-          #   qt_arch: win32_mingw53
-        # 额外设置msvc_arch
         include:
           - qt_arch: win64_msvc2017_64
             msvc_arch: x64
@@ -66,6 +54,5 @@ jobs:
           vc_arch: ${{ matrix.msvc_arch }}
         run: |
           call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" %vc_arch%
-          cd src
           qmake
           nmake
