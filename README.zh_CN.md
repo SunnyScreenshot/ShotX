@@ -31,7 +31,7 @@
 | :-------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :-----------------------------------------: |
 | [ShotX](https://github.com/XMuli/ShotX) |            新手级的截图，适合初学 Qt/C++ 不到一年            |           一款极简的截图工具(支持 Win，Mac，Linux)           |    [url](https://gitee.com/XMuli/ShotX)     |
 |    [Flipped](https://c.xmuli.tech/)     |       中级难度的截图，适合已学习 Qt/C++ 一两年经验进阶       | 简洁且漂亮的截图的软件工具，支持 Windows，MacOS，Linux 平台  | [url](https://gitee.com/XMuli/FlippedPages) |
-|   [Sunny](https://sunny.xmuli.tech/)    | 高级难度的截图，适合已深入研究 Qt/C++ 三五年经验，属于商业级的成熟作品，**属最高水品之作** | Simple and beautiful screenshot software tool for Windows, MacOS and Linux；已上架 Deepin/UOS Store，Spark Store 等 |  [url](https://gitee.com/XMuli/SunnyPages)  |
+|   [Sunny](https://sunny.xmuli.tech/)    | 高级难度的截图，适合已深入研究 Qt/C++ 三五年经验，属于商业级的成熟作品，**是截图系列的最高水准之作** | Simple and beautiful screenshot software tool for Windows, MacOS and Linux；已上架 Deepin/UOS Store，Spark Store 等 |  [url](https://gitee.com/XMuli/SunnyPages)  |
 
 <br>
 
