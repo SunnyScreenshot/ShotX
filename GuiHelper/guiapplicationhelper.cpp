@@ -1,10 +1,13 @@
-#include "guiapplicationhelper.h"
+﻿// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2020-2024 XMuli
+// SPDX-GitHub: https://github.com/XMuli/shotx
+// SPDX-Author: XMuli <xmulitech@gmail.com>
 
+#include "guiapplicationhelper.h"
 #include <QColor>
 
 GuiApplicationHelper::GuiApplicationHelper()
 {
-
 }
 
 inline static int adjustColorValue(int base, qint8 increment, int max = 255)

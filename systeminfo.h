@@ -1,3 +1,8 @@
+﻿// SPDX-License-Identifier: MIT
+// SPDX-FileCopyrightText: 2020-2024 XMuli
+// SPDX-GitHub: https://github.com/XMuli/shotx
+// SPDX-Author: XMuli <xmulitech@gmail.com>
+
 #ifndef SYSTEMINFO_H
 #define SYSTEMINFO_H
 
