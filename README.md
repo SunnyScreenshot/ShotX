@@ -21,27 +21,94 @@
 
 <br>
 
-If it helps, <font color=#FE7207 size=4 face="young round">you can click on the project's <img src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/master/project_log/20190709023321.png" height="18" width="18"/> **Star** and <img src="https://raw.githubusercontent.com/touwoyimuli/FigureBed/master/project_log/20190709023317.png" height="18" width="18"/>**Fork** for two icons that are easy to lift between hands, quite a nod,</font> hands down.
+The origin of the original dream, write a screenshot software at will, so far (2024.01.24) also wrote three different degrees, from easy to difficult, for your reference;
+
+More detailed development details of the document, have time to write, supplemented in the series, QQ exchange group: [418103279](https://qm.qq.com/cgi-bin/qm/qr?k=jsD03QzMohGZm0TqYAFh3BvKOpCGlTcT&jump_from=webapi&authKey=DMUwiCQ6ta95PoH8JmtZ+Jz9y7Ozg3yinEsxmm92rNXZRVeMPD7NRgjU+dmUI8Xu) 
+
+
+
+|                 Project                 |                           Describe                           |                          Introduce                           |               Mirror (Gitee)                |
+| :-------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :-----------------------------------------: |
+| [ShotX](https://github.com/XMuli/ShotX) |            新手级的截图，适合初学 Qt/C++ 不到一年            |           一款极简的截图工具(支持 Win，Mac，Linux)           |    [url](https://gitee.com/XMuli/ShotX)     |
+|    [Flipped](https://c.xmuli.tech/)     |       中级难度的截图，适合已学习 Qt/C++ 一两年经验进阶       | 简洁且漂亮的截图的软件工具，支持 Windows，MacOS，Linux 平台  | [url](https://gitee.com/XMuli/FlippedPages) |
+|   [Sunny](https://sunny.xmuli.tech/)    | 高级难度的截图，适合已深入研究 Qt/C++ 三五年经验，属于商业级的成熟作品，**属最高水品之作** | Simple and beautiful screenshot software tool for Windows, MacOS and Linux；已上架 Deepin/UOS Store，Spark Store 等 |  [url](https://gitee.com/XMuli/SunnyPages)  |
 
 <br>
 
-## Style
+## Compilation
 
-<img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2021/%E6%88%AA%E5%B1%8F2021-10-05%2004.11.29.jpg" width="80%"/>
+### Dependencies
 
-<img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2021/%E6%88%AA%E5%B1%8F2021-10-05%2004.11.45.png" width="50%"/>
+- Qt >= 5.15.2
+- CMake >= 3.16
+- MSVC >= 2022 | MinGW >=  8.1.0 | GCC >= 9.4 | Clang >= 12.0
+
+​	NOTE: This is a successfully compiled dependency version, lower versions have not been tested.
 
 <br>
+
+### Build
+
+- **Kit Tools:** Windows 10 & Qt 5.15.2 & CMake 3.24.1 & MSVC 2022 ( or MinGW 8.1.0)
+
+- **Compile Step:**
+
+  ```bash
+  qmake
+  make -j16
+  ```
+
+<br>
+
+## Demonstration effect
+
+**MacOS**
+
+<img src="https://fastly.jsdelivr.net/gh/XMuli/xmuliPic@pic/2024/202401250051823.jpg" width="100%"/>
+
+<img src="https://fastly.jsdelivr.net/gh/XMuli/xmuliPic@pic/2024/202401250051067.png" width="400"/> 
+
+**Windows**
+
+<img src="https://fastly.jsdelivr.net/gh/XMuli/xmuliPic@pic/2024/202401250055738.png" width="100%"/>
+
+
+
+## Tutorial
+
+**ShotX**
+
+- [GitHub Code](https://github.com/XMuli/shotx) 
+
+**FLIPPED** 
+
+- 开发教程: [基于 QT 开发 FLIPPED ：简易且漂亮的跨平台截图贴图软件](https://blog.csdn.net/qq_33154343/article/details/130053230)
+
+- 视频演示效果： [bilibili](https://www.bilibili.com/video/BV1rX4y1D7EZ/)
+
+**Sunny**
+
+- [系类开发教程](https://github.com/XMuli/QtExamples)
+- 视频演示效果: 待续
+
+
+
+## Great
+
+If it helps you, or find it useful,  **you can click on the item's ⭐Star 🍴 Fork  of the two icons, conveniently lift the hand between, said a point of praise the hand,** There is a fragrance in your hand；The next best thing is to buy me a cold Coke.  
+
+
 
 ## Author
 
-<font color=#70AD47 size=4 face="幼圆">**偕臧 (XMuli):** </font> [https://ifmet.cn](https://ifmet.cn/)
+|    Title    |                            Detail                            |
+| :---------: | :----------------------------------------------------------: |
+| WeChat / QQ | [252311126](https://wpa.qq.com/authd?IDKEY=31f3ef7312b39e2c8dc822ae2f4c3b3118e1a6f31cc83373) |
+|   GitHub    |               [偕臧](https://github.com/XMuli)               |
 
-<br>
 
-## Protocol
 
-<img src="https://cdn.jsdelivr.net/gh/xmuli/xmuliPic@pic/2020/MIT.png" width="25%"/>
+## Tutorial series
 
-This project is distributed and used based on the `MIT` protocol. For more information, see [protocol file](/LICENSE).
+[QtExamples](https://github.com/XMuli/QtExamples) Welcome `star` ⭐ and `fork` 🍴 This series of `C++ / QT / DTK` studies, with a catalogue of studies from the beginning to the end of the series, where you can learn how to write this kind of software yourself. This is a complete series of tutorials and **forever free**!
 
