@@ -30,7 +30,7 @@ More detailed development details of the document, have time to write, supplemen
 |                 Project                 |                           Describe                           |                          Introduce                           |               Mirror (Gitee)                |
 | :-------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :-----------------------------------------: |
 | [ShotX](https://github.com/XMuli/ShotX) |            新手级的截图，适合初学 Qt/C++            |           一款极简的截图工具(支持 Win，Mac，Linux)           |    [url](https://gitee.com/XMuli/ShotX)     |
-|    [Flipped](https://c.xmuli.tech/)     |       中级难度的截图，适合已学习 Qt/C++ 数年经验进阶，需同类型软件的代码借鉴，后探索独立写一个大的软件       | 简洁且漂亮的截图的软件工具，支持 Windows，MacOS，Linux 平台  | [url](https://gitee.com/XMuli/FlippedPages) |
+|    [Flipped](https://flipped.xmuli.tech/)     |       中级难度的截图，适合已学习 Qt/C++ 数年经验进阶，需同类型软件的代码借鉴，后探索独立写一个大的软件       | 简洁且漂亮的截图的软件工具，支持 Windows，MacOS，Linux 平台  | [url](https://gitee.com/XMuli/FlippedPages) |
 |   [Sunny](https://sunny.xmuli.tech/)    | 专家级难度的截图，适合已多年沉浸研究 Qt/C++ 经验，随心所欲写任意所需功能，属于商业级的成熟作品，**是截图系列的最高水准之作** | Simple and beautiful screenshot software tool for Windows, MacOS and Linux；已上架 Deepin/UOS Store，Spark Store 等 |  [url](https://gitee.com/XMuli/SunnyPages)  |
 
 <br>
